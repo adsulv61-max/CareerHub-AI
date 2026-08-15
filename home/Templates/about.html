@@ -1,0 +1,461 @@
+{% extends "base.html" %}
+
+{% block title %}
+CareerHub AI | About Us
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================
+   ABOUT HERO
+========================= */
+
+.about-hero {
+    text-align: center;
+    padding: 90px 20px 70px;
+}
+
+.about-hero h1 {
+    font-size: 52px;
+    margin-bottom: 18px;
+    color: var(--text);
+}
+
+.about-hero h1 span {
+    color: var(--blue);
+}
+
+.about-hero p {
+    max-width: 800px;
+    margin: auto;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text-light);
+}
+
+
+/* =========================
+   ABOUT CONTAINER
+========================= */
+
+.about-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px 20px 90px;
+}
+
+
+/* =========================
+   ABOUT CARD
+========================= */
+
+.about-card {
+    background: var(--card);
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    padding: 40px;
+    margin-bottom: 28px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+
+    transition:
+        background .3s ease,
+        border .3s ease,
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+.about-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+
+/* =========================
+   CARD HEADING
+========================= */
+
+.about-card h2 {
+    font-size: 30px;
+    margin-bottom: 18px;
+    color: var(--text);
+}
+
+.about-card h2 span {
+    color: var(--blue);
+}
+
+
+/* =========================
+   CARD TEXT
+========================= */
+
+.about-card p {
+    color: var(--text-light);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 10px;
+}
+
+
+/* =========================
+   FEATURES
+========================= */
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 25px;
+}
+
+
+/* =========================
+   FEATURE CARD
+========================= */
+
+.feature {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    padding: 28px;
+    text-align: center;
+
+    transition:
+        .3s,
+        background .3s,
+        border .3s;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    border-color: var(--blue);
+}
+
+
+/* =========================
+   FEATURE ICON
+========================= */
+
+.feature-icon {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(37,99,235,0.10);
+
+    border-radius: 15px;
+
+    font-size: 32px;
+}
+
+
+/* =========================
+   FEATURE TITLE
+========================= */
+
+.feature h3 {
+    margin-bottom: 10px;
+    color: var(--text);
+    font-size: 18px;
+}
+
+
+/* =========================
+   FEATURE TEXT
+========================= */
+
+.feature p {
+    color: var(--text-light);
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+
+/* =========================
+   DEVELOPER CARD
+========================= */
+
+.developer-card {
+    text-align: center;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    padding: 45px 20px;
+    margin-top: 30px;
+
+    transition:
+        background .3s,
+        border .3s,
+        transform .3s;
+}
+
+.developer-card:hover {
+    transform: translateY(-4px);
+}
+
+
+/* =========================
+   DEVELOPER TITLE
+========================= */
+
+.developer-card h2 {
+    color: var(--text);
+    margin-bottom: 12px;
+    font-size: 25px;
+}
+
+
+/* =========================
+   DEVELOPER NAME
+========================= */
+
+.developer-name {
+    color: var(--blue);
+
+    font-size: 22px;
+    font-weight: 800;
+
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+
+
+/* =========================
+   DEVELOPER TEXT
+========================= */
+
+.developer-card p {
+    color: var(--text-light);
+}
+
+
+/* =========================
+   DARK MODE EXTRA
+========================= */
+
+body.dark-mode .about-card,
+body.dark-mode .feature,
+body.dark-mode .developer-card {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+body.dark-mode .feature-icon {
+    background: rgba(96,165,250,0.12);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width: 800px) {
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .about-hero h1 {
+        font-size: 40px;
+    }
+
+    .about-hero p {
+        font-size: 16px;
+    }
+
+    .about-card {
+        padding: 28px;
+    }
+
+}
+
+</style>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="about-hero">
+
+    <h1>
+        About <span>CareerHub AI</span>
+    </h1>
+
+    <p>
+        A modern career platform designed to connect
+        students, job seekers and companies in one
+        simple and professional place.
+    </p>
+
+</section>
+
+
+<!-- =========================
+     ABOUT CONTENT
+========================= -->
+
+<section class="about-container">
+
+
+    <!-- =====================
+         MISSION
+    ====================== -->
+
+    <div class="about-card">
+
+        <h2>
+            Our <span>Mission</span>
+        </h2>
+
+        <p>
+            CareerHub AI aims to make the job search process
+            easier for students and job seekers.
+        </p>
+
+        <p>
+            Our platform brings job opportunities, companies
+            and career resources together in one place.
+        </p>
+
+    </div>
+
+
+    <!-- =====================
+         WHY CAREERHUB
+    ====================== -->
+
+    <div class="about-card">
+
+        <h2>
+            Why <span>CareerHub AI?</span>
+        </h2>
+
+        <p>
+            Finding the right job can be difficult.
+            CareerHub AI helps users discover opportunities
+            based on their skills, explore companies and
+            take the next step toward their professional career.
+        </p>
+
+    </div>
+
+
+    <!-- =====================
+         FEATURES
+    ====================== -->
+
+    <div class="about-card">
+
+        <h2>
+            What We <span>Provide</span>
+        </h2>
+
+
+        <div class="features">
+
+
+            <!-- JOBS -->
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    💼
+                </div>
+
+                <h3>
+                    Job Opportunities
+                </h3>
+
+                <p>
+                    Discover jobs from different companies
+                    and explore suitable career opportunities.
+                </p>
+
+            </div>
+
+
+            <!-- COMPANIES -->
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🏢
+                </div>
+
+                <h3>
+                    Top Companies
+                </h3>
+
+                <p>
+                    Explore companies and view the jobs
+                    available from each organization.
+                </p>
+
+            </div>
+
+
+            <!-- AI -->
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🤖
+                </div>
+
+                <h3>
+                    AI Assistant
+                </h3>
+
+                <p>
+                    Get career-related assistance and
+                    guidance through our AI Assistant.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================
+         DEVELOPER
+    ====================== -->
+
+    <div class="developer-card">
+
+        <h2>
+            Developed with ❤️ by
+        </h2>
+
+        <div class="developer-name">
+            Vikrant Adsul
+        </div>
+
+        <p>
+            CareerHub AI — College Level Project
+        </p>
+
+    </div>
+
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Application Submitted | CareerHub AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f7fb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 650px;
+            background: white;
+            border-radius: 20px;
+            padding: 45px;
+            text-align: center;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.10);
+        }
+
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: auto;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            background: #dcfce7;
+            color: #16a34a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+        }
+
+        h1 {
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        .job-box {
+            text-align: left;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .job-box p {
+            margin: 10px 0;
+            color: #475569;
+        }
+
+        .job-box strong {
+            color: #111827;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .pdf-btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 14px 24px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        .pdf-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .jobs-btn {
+            display: inline-block;
+            background: #f1f5f9;
+            color: #334155;
+            text-decoration: none;
+            padding: 14px 24px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        .jobs-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .note {
+            margin-top: 25px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="icon">
+        ✓
+    </div>
+
+    <h1>
+        Application Submitted!
+    </h1>
+
+    <p class="subtitle">
+        Your application has been successfully submitted.
+    </p>
+
+    <div class="job-box">
+
+        <p>
+            <strong>Position:</strong>
+            {{ job.title }}
+        </p>
+
+        <p>
+            <strong>Company:</strong>
+            {{ job.company }}
+        </p>
+
+        <p>
+            <strong>Location:</strong>
+            {{ job.location }}
+        </p>
+
+        <p>
+            <strong>Application ID:</strong>
+            #{{ application.id }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            Submitted
+        </p>
+
+    </div>
+
+    <div class="buttons">
+
+        <!-- PDF DOWNLOAD -->
+        <a
+            href="{% url 'download_application_pdf' application.id %}"
+            class="pdf-btn"
+        >
+            📄 Download Application PDF
+        </a>
+
+        <!-- BACK TO JOBS -->
+        <a
+            href="{% url 'job_list' %}"
+            class="jobs-btn"
+        >
+            ← Browse More Jobs
+        </a>
+
+    </div>
+
+    <p class="note">
+        Keep your application PDF for future reference.
+    </p>
+
+</div>
+
+</body>
+</html>

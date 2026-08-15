@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply | CareerHub AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        nav {
+            height: 72px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .logo span {
+            color: #111827;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .form-card {
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .job-name {
+            color: #2563eb;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        label {
+            display: block;
+            margin: 18px 0 7px;
+            font-weight: 600;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #dbe2ea;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            margin-top: 50px;
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        footer span {
+            color: #60a5fa;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">
+        Career<span>Hub AI</span>
+    </div>
+
+    <a href="{% url 'job_list' %}"
+       style="text-decoration:none;color:#2563eb;font-weight:bold;">
+        ← Back to Jobs
+    </a>
+</nav>
+
+<div class="container">
+
+    <div class="form-card">
+
+        <h1>Apply for Job</h1>
+
+        <p class="job-name">
+            {{ job.title }} — {{ job.company }}
+        </p>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <label>Full Name</label>
+            <input
+                type="text"
+                name="full_name"
+                placeholder="Enter your full name"
+                required
+            >
+
+            <label>Email</label>
+            <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+            >
+
+            <label>Phone Number</label>
+            <input
+                type="tel"
+                name="phone"
+                placeholder="Enter your phone number"
+                required
+            >
+
+            <label>Upload Resume</label>
+            <input
+                type="file"
+                name="resume"
+                accept=".pdf,.doc,.docx"
+            >
+
+            <label>Cover Letter</label>
+            <textarea
+                name="cover_letter"
+                placeholder="Write your cover letter..."
+            ></textarea>
+
+            <button type="submit">
+                Submit Application
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<footer>
+    <p>
+        © 2026 CareerHub AI |
+        Developed by <span>Vikrant Adsul</span>
+    </p>
+</footer>
+
+</body>
+</html>

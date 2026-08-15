@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Applications | CareerHub AI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            height: 72px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .logo span {
+            color: #111827;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .logout {
+            background: #2563eb;
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+
+        .logout:hover {
+            background: #1d4ed8;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: linear-gradient(
+                135deg,
+                #eff6ff,
+                #ffffff
+            );
+
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 40px;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .header h1 span {
+            color: #2563eb;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px 70px;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e5eaf2;
+            border-radius: 15px;
+            padding: 24px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.04);
+            transition: 0.25s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(37,99,235,0.08);
+        }
+
+        .stat-icon {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .stat-title {
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* ================= APPLICATION CARD ================= */
+
+        .application-card {
+            background: white;
+            border: 1px solid #e5eaf2;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 18px;
+            transition: 0.25s;
+        }
+
+        .application-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(37,99,235,0.10);
+            border-color: #bfdbfe;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .job-title {
+            font-size: 22px;
+            color: #111827;
+            margin-bottom: 7px;
+        }
+
+        .company {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status {
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            background: #ecfdf5;
+            color: #047857;
+            white-space: nowrap;
+        }
+
+        /* ================= DETAILS ================= */
+
+        .details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .detail {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: #475569;
+            font-size: 13px;
+        }
+
+        /* ================= ACTIONS ================= */
+
+        .application-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px solid #eef2f7;
+        }
+
+        .pdf-btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 10px 17px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .pdf-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .job-btn {
+            display: inline-block;
+            background: #f8fafc;
+            color: #374151;
+            border: 1px solid #dbe3ef;
+            text-decoration: none;
+            padding: 10px 17px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .job-btn:hover {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            background: white;
+            border: 1px solid #e5eaf2;
+            border-radius: 16px;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .empty h2 {
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .browse {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 11px 22px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .browse:hover {
+            background: #1d4ed8;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #111827;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 30px;
+        }
+
+        footer span {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width: 700px) {
+
+            nav {
+                padding: 0 20px;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .top {
+                flex-direction: column;
+            }
+
+            .application-actions {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <div class="logo">
+        Career<span>Hub AI</span>
+    </div>
+
+
+    <ul>
+
+        <li>
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'job_list' %}">
+                Jobs
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'my_applications' %}">
+                My Applications
+            </a>
+        </li>
+
+    </ul>
+
+
+    <a
+        href="{% url 'logout' %}"
+        class="logout"
+    >
+        Logout
+    </a>
+
+</nav>
+
+
+<!-- ================= HEADER ================= -->
+
+<section class="header">
+
+    <h1>
+        My <span>Applications</span>
+    </h1>
+
+    <p>
+        Track all the jobs you have applied for.
+    </p>
+
+</section>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <!-- ================= STATS ================= -->
+
+    <div class="stats">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📄
+            </div>
+
+            <div class="stat-number">
+                {{ total_applications }}
+            </div>
+
+            <div class="stat-title">
+                Total Applications
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                💼
+            </div>
+
+            <div class="stat-number">
+                {{ applications|length }}
+            </div>
+
+            <div class="stat-title">
+                Jobs Applied
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🚀
+            </div>
+
+            <div class="stat-number">
+                Active
+            </div>
+
+            <div class="stat-title">
+                Application Status
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= APPLICATIONS ================= -->
+
+    {% for application in applications %}
+
+
+    <div class="application-card">
+
+
+        <div class="top">
+
+
+            <div>
+
+                <h2 class="job-title">
+                    {{ application.job.title }}
+                </h2>
+
+                <div class="company">
+                    🏢 {{ application.job.company }}
+                </div>
+
+            </div>
+
+
+            <div class="status">
+                ✓ Submitted
+            </div>
+
+
+        </div>
+
+
+        <!-- DETAILS -->
+
+        <div class="details">
+
+
+            <div class="detail">
+                📍 {{ application.job.location }}
+            </div>
+
+
+            <div class="detail">
+                💼 {{ application.job.job_type }}
+            </div>
+
+
+            {% if application.job.salary %}
+
+            <div class="detail">
+                💰 {{ application.job.salary }}
+            </div>
+
+            {% endif %}
+
+
+            <div class="detail">
+                📅 {{ application.applied_at|date:"d M Y, h:i A" }}
+            </div>
+
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="application-actions">
+
+
+            <a
+                href="{% url 'job_list' %}"
+                class="job-btn"
+            >
+                Browse Jobs
+            </a>
+
+
+            <a
+                href="{% url 'download_application_pdf' application.id %}"
+                class="pdf-btn"
+            >
+                📄 Download Application PDF
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+    {% empty %}
+
+
+    <!-- ================= EMPTY ================= -->
+
+    <div class="empty">
+
+        <div class="empty-icon">
+            📂
+        </div>
+
+        <h2>
+            No Applications Yet
+        </h2>
+
+        <p>
+            You haven't applied for any jobs yet.
+            Start exploring opportunities today.
+        </p>
+
+        <a
+            href="{% url 'job_list' %}"
+            class="browse"
+        >
+            Browse Jobs →
+        </a>
+
+    </div>
+
+
+    {% endfor %}
+
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        © 2026 CareerHub AI |
+        Developed by
+        <span>Vikrant Adsul</span>
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

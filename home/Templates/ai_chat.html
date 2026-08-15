@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CareerHub AI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* ================= LIGHT MODE ================= */
+
+        body {
+            background: #f7f8fc;
+            min-height: 100vh;
+            display: flex;
+            color: #1e293b;
+            transition: .3s ease;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+
+            width: 280px;
+            height: 100vh;
+
+            background: #111827;
+            color: white;
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            padding: 20px 15px;
+
+            transition: .3s ease;
+        }
+
+        .brand {
+            font-size: 23px;
+            font-weight: bold;
+            padding: 10px 12px 20px;
+        }
+
+        .brand span {
+            color: #60a5fa;
+        }
+
+        /* ================= NEW CHAT ================= */
+
+        .new-chat {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #374151;
+
+            background: #1f2937;
+
+            color: white;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            text-align: left;
+
+            transition: .2s;
+        }
+
+        .new-chat:hover {
+            background: #374151;
+        }
+
+        /* ================= HISTORY ================= */
+
+        .history-title {
+
+            color: #9ca3af;
+
+            font-size: 13px;
+
+            margin: 25px 10px 10px;
+
+            text-transform: uppercase;
+        }
+
+        .history {
+
+            overflow-y: auto;
+
+            flex: 1;
+
+            padding-right: 3px;
+        }
+
+        .history::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .history::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 10px;
+        }
+
+        .history-item {
+
+            display: block;
+
+            padding: 12px;
+
+            margin-bottom: 5px;
+
+            color: #e5e7eb;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            transition: .2s;
+        }
+
+        .history-item:hover {
+            background: #1f2937;
+            color: white;
+        }
+
+        .history-item.active {
+            background: #374151;
+            color: white;
+        }
+
+        .no-history {
+
+            color: #9ca3af;
+
+            padding: 12px;
+
+            font-size: 14px;
+        }
+
+        .login-message {
+
+            color: #fbbf24;
+
+            padding: 12px;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+        /* ================= HOME BUTTON ================= */
+
+        .home-btn {
+
+            text-decoration: none;
+
+            color: white;
+
+            background: #2563eb;
+
+            padding: 12px;
+
+            text-align: center;
+
+            border-radius: 9px;
+
+            margin-top: 10px;
+
+            transition: .2s;
+        }
+
+        .home-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+
+            margin-left: 280px;
+
+            width: calc(100% - 280px);
+
+            min-height: 100vh;
+
+            transition: .3s ease;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+
+            height: 70px;
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 5%;
+
+            box-shadow:
+                0 2px 10px rgba(0,0,0,0.06);
+
+            transition: .3s ease;
+        }
+
+        .navbar-title {
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: #111827;
+        }
+
+        .status {
+
+            color: #16a34a;
+
+            font-size: 14px;
+        }
+
+        /* ================= DARK MODE BUTTON ================= */
+
+        .dark-btn {
+
+            border: none;
+
+            background: #111827;
+
+            color: white;
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+            margin-left: 15px;
+
+            transition: .2s;
+        }
+
+        .dark-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ================= NAV RIGHT ================= */
+
+        .navbar-right {
+
+            display: flex;
+
+            align-items: center;
+        }
+
+        /* ================= CONTENT ================= */
+
+        .container {
+
+            max-width: 900px;
+
+            margin: 50px auto;
+
+            padding: 0 25px;
+        }
+
+        .title {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+        .title h1 {
+
+            font-size: 38px;
+
+            color: #111827;
+
+            transition: .3s;
+        }
+
+        .title p {
+
+            margin-top: 8px;
+
+            color: #64748b;
+
+            transition: .3s;
+        }
+
+        /* ================= CHAT BOX ================= */
+
+        .chat-box {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,0.08);
+
+            transition: .3s ease;
+        }
+
+        /* ================= OLD QUESTION ================= */
+
+        .old-question {
+
+            margin-bottom: 20px;
+
+            padding: 20px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 12px;
+
+            line-height: 1.7;
+
+            color: #1e293b;
+
+            transition: .3s ease;
+        }
+
+        .question-title {
+
+            font-weight: bold;
+
+            color: #475569;
+
+            margin-bottom: 10px;
+        }
+
+        /* ================= TEXTAREA ================= */
+
+        textarea {
+
+            width: 100%;
+
+            height: 130px;
+
+            padding: 18px;
+
+            border: 1px solid #dbe3ef;
+
+            border-radius: 12px;
+
+            resize: none;
+
+            font-size: 16px;
+
+            outline: none;
+
+            background: white;
+
+            color: #1e293b;
+
+            transition: .3s ease;
+        }
+
+        textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        textarea:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37,99,235,0.08);
+        }
+
+        /* ================= ASK BUTTON ================= */
+
+        .ask-btn {
+
+            margin-top: 15px;
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: .2s;
+        }
+
+        .ask-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* ================= AI ANSWER ================= */
+
+        .answer {
+
+            margin-top: 25px;
+
+            padding: 20px;
+
+            background: #f1f5ff;
+
+            border-left: 5px solid #2563eb;
+
+            border-radius: 10px;
+
+            color: #1e293b;
+
+            line-height: 1.7;
+
+            white-space: pre-wrap;
+
+            transition: .3s ease;
+        }
+
+        .answer-title {
+
+            font-weight: bold;
+
+            color: #2563eb;
+
+            margin-bottom: 8px;
+        }
+
+        /* ================= WARNING ================= */
+
+        .warning {
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            background: #fff7ed;
+
+            border-left: 4px solid #f97316;
+
+            border-radius: 8px;
+
+            color: #9a3412;
+
+            line-height: 1.5;
+
+            transition: .3s ease;
+        }
+
+
+        /* =====================================================
+           DARK MODE
+        ===================================================== */
+
+        body.dark {
+
+            background: #0f172a;
+
+            color: #e5e7eb;
+        }
+
+        body.dark .sidebar {
+
+            background: #020617;
+
+            border-right: 1px solid #1e293b;
+        }
+
+        body.dark .navbar {
+
+            background: #111827;
+
+            border-bottom: 1px solid #1e293b;
+
+            box-shadow:
+                0 2px 15px rgba(0,0,0,.35);
+        }
+
+        body.dark .navbar-title {
+
+            color: #f8fafc;
+        }
+
+        body.dark .status {
+
+            color: #4ade80;
+        }
+
+        body.dark .dark-btn {
+
+            background: #f8fafc;
+
+            color: #111827;
+        }
+
+        body.dark .title h1 {
+
+            color: #f8fafc;
+        }
+
+        body.dark .title p {
+
+            color: #94a3b8;
+        }
+
+        body.dark .chat-box {
+
+            background: #111827;
+
+            border: 1px solid #1e293b;
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,.30);
+        }
+
+        body.dark .old-question {
+
+            background: #172033;
+
+            border-color: #273449;
+
+            color: #e5e7eb;
+        }
+
+        body.dark .question-title {
+
+            color: #cbd5e1;
+        }
+
+        body.dark textarea {
+
+            background: #0f172a;
+
+            border-color: #334155;
+
+            color: #f8fafc;
+        }
+
+        body.dark textarea::placeholder {
+
+            color: #64748b;
+        }
+
+        body.dark textarea:focus {
+
+            border-color: #3b82f6;
+
+            box-shadow:
+                0 0 0 3px rgba(59,130,246,.15);
+        }
+
+        body.dark .answer {
+
+            background: #172554;
+
+            border-left-color: #3b82f6;
+
+            color: #e5e7eb;
+        }
+
+        body.dark .answer-title {
+
+            color: #60a5fa;
+        }
+
+        body.dark .warning {
+
+            background: #431407;
+
+            border-left-color: #f97316;
+
+            color: #fed7aa;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+
+                width: 220px;
+            }
+
+            .main {
+
+                margin-left: 220px;
+
+                width: calc(100% - 220px);
+            }
+
+            .title h1 {
+
+                font-size: 28px;
+            }
+
+            .container {
+
+                padding: 0 15px;
+            }
+
+            .status {
+
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+
+    <div class="brand">
+
+        Career<span>Hub AI</span>
+
+    </div>
+
+
+    <form method="GET" action="/ai/">
+
+        <button
+            type="submit"
+            class="new-chat">
+
+            ＋ New Chat
+
+        </button>
+
+    </form>
+
+
+    <div class="history-title">
+
+        Chat History
+
+    </div>
+
+
+    <div class="history">
+
+
+        {% if user.is_authenticated %}
+
+
+            {% for chat in history %}
+
+
+                <a
+                    href="/ai/?chat={{ chat.id }}"
+                    class="history-item
+                    {% if selected_chat and selected_chat.id == chat.id %}
+                    active
+                    {% endif %}"
+                >
+
+                    💬 {{ chat.question }}
+
+                </a>
+
+
+            {% empty %}
+
+
+                <div class="no-history">
+
+                    No chat history yet.
+
+                </div>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <div class="login-message">
+
+                🔒 Login to save your chat history.
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+    <a
+        href="/"
+        class="home-btn">
+
+        ← Back to Home
+
+    </a>
+
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+
+        <div class="navbar-title">
+
+            🤖 CareerHub AI
+
+        </div>
+
+
+        <div class="navbar-right">
+
+            <div class="status">
+
+                ✦ Career Guidance • AI Powered
+
+            </div>
+
+
+            <!-- DARK MODE BUTTON -->
+
+            <button
+                class="dark-btn"
+                id="darkModeBtn"
+                onclick="toggleDarkMode()">
+
+                🌙
+
+            </button>
+
+        </div>
+
+
+    </nav>
+
+
+    <!-- CONTENT -->
+
+    <div class="container">
+
+
+        <div class="title">
+
+            <h1>
+
+                CareerHub AI
+
+            </h1>
+
+            <p>
+
+                Your personal AI career assistant
+
+            </p>
+
+        </div>
+
+
+        <div class="chat-box">
+
+
+            {% if selected_chat %}
+
+                <div class="old-question">
+
+                    <div class="question-title">
+
+                        👤 You
+
+                    </div>
+
+                    {{ selected_chat.question }}
+
+                </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <textarea
+                    name="message"
+                    placeholder="Ask CareerHub AI anything...
+
+Example: How can I prepare for a Python Developer interview?"
+                    required></textarea>
+
+
+                <button
+                    type="submit"
+                    class="ask-btn">
+
+                    ✨ Ask CareerHub AI
+
+                </button>
+
+            </form>
+
+
+            {% if answer %}
+
+                <div class="answer">
+
+                    <div class="answer-title">
+
+                        🤖 CareerHub AI Answer
+
+                    </div>
+
+                    {{ answer }}
+
+                </div>
+
+            {% endif %}
+
+
+            {% if not user.is_authenticated %}
+
+                <div class="warning">
+
+                    🔒 You are not logged in.
+
+                    Your AI questions will not be saved
+                    to Chat History.
+
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+<!-- =====================================================
+     DARK MODE JAVASCRIPT
+===================================================== -->
+
+<script>
+
+function toggleDarkMode() {
+
+    document.body.classList.toggle("dark");
+
+    const button =
+        document.getElementById("darkModeBtn");
+
+
+    if (document.body.classList.contains("dark")) {
+
+        button.innerHTML = "☀️";
+
+        localStorage.setItem(
+            "careerhub-ai-dark",
+            "true"
+        );
+
+    } else {
+
+        button.innerHTML = "🌙";
+
+        localStorage.setItem(
+            "careerhub-ai-dark",
+            "false"
+        );
+
+    }
+
+}
+
+
+/* ================= LOAD SAVED MODE ================= */
+
+window.addEventListener("DOMContentLoaded", function() {
+
+    const darkMode =
+        localStorage.getItem("careerhub-ai-dark");
+
+    const button =
+        document.getElementById("darkModeBtn");
+
+
+    if (darkMode === "true") {
+
+        document.body.classList.add("dark");
+
+        button.innerHTML = "☀️";
+
+    } else {
+
+        button.innerHTML = "🌙";
+
+    }
+
+});
+
+</script>
+
+
+</body>
+
+</html>

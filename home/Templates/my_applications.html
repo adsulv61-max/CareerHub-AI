@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Applications | CareerHub AI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            height: 72px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .logo span {
+            color: #111827;
+        }
+
+        .back {
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            max-width: 1100px;
+            margin: 45px auto 25px;
+            padding: 0 20px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            color: #111827;
+        }
+
+        .header p {
+            margin-top: 8px;
+            color: #64748b;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            max-width: 1100px;
+            margin: 0 auto 30px;
+            padding: 0 20px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .stat-number {
+            font-size: 30px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .stat-label {
+            margin-top: 5px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* ================= APPLICATIONS ================= */
+
+        .applications {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 20px 70px;
+        }
+
+        .application-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 18px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+
+            box-shadow: 0 6px 22px rgba(0,0,0,0.06);
+
+            transition: 0.2s;
+        }
+
+        .application-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(37,99,235,0.10);
+        }
+
+        .job-info h2 {
+            font-size: 21px;
+            color: #111827;
+            margin-bottom: 7px;
+        }
+
+        .company {
+            color: #2563eb;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .date {
+            margin-top: 10px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status {
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .submitted {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .review {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        .shortlisted {
+            background: #ecfdf5;
+            color: #15803d;
+        }
+
+        .rejected {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            background: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 16px;
+            box-shadow: 0 6px 22px rgba(0,0,0,0.05);
+        }
+
+        .empty-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .empty h2 {
+            margin-bottom: 8px;
+        }
+
+        .empty p {
+            color: #64748b;
+        }
+
+        .jobs-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 22px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width: 700px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .application-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header h1 {
+                font-size: 29px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <div class="logo">
+        Career<span>Hub AI</span>
+    </div>
+
+    <a href="{% url 'job_list' %}" class="back">
+        ← Back to Jobs
+    </a>
+
+</nav>
+
+
+<!-- ================= HEADER ================= -->
+
+<section class="header">
+
+    <h1>My Applications</h1>
+
+    <p>
+        Track all the jobs you have applied for in one place.
+    </p>
+
+</section>
+
+
+<!-- ================= STATS ================= -->
+
+<section class="stats">
+
+    <div class="stat-card">
+
+        <div class="stat-number">
+            {{ applications|length }}
+        </div>
+
+        <div class="stat-label">
+            Total Applications
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-number">
+            {{ applications|length }}
+        </div>
+
+        <div class="stat-label">
+            Applications Submitted
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-number">
+            0
+        </div>
+
+        <div class="stat-label">
+            Shortlisted
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= APPLICATION LIST ================= -->
+
+<section class="applications">
+
+    {% for application in applications %}
+
+        <div class="application-card">
+
+            <div class="job-info">
+
+                <h2>
+                    {{ application.job_title }}
+                </h2>
+
+                <div class="company">
+                    🏢 {{ application.company }}
+                </div>
+
+                <div class="date">
+                    📅 Applied on
+                    {{ application.applied_at|date:"d M Y, h:i A" }}
+                </div>
+
+            </div>
+
+
+            {% if application.status == "Submitted" %}
+
+                <div class="status submitted">
+                    ✓ Submitted
+                </div>
+
+            {% elif application.status == "Under Review" %}
+
+                <div class="status review">
+                    ◷ Under Review
+                </div>
+
+            {% elif application.status == "Shortlisted" %}
+
+                <div class="status shortlisted">
+                    ★ Shortlisted
+                </div>
+
+            {% elif application.status == "Rejected" %}
+
+                <div class="status rejected">
+                    ✕ Rejected
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    {% empty %}
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                📄
+            </div>
+
+            <h2>
+                No Applications Yet
+            </h2>
+
+            <p>
+                You haven't applied for any jobs yet.
+                Start exploring opportunities today.
+            </p>
+
+            <a href="{% url 'job_list' %}" class="jobs-btn">
+                Explore Jobs →
+            </a>
+
+        </div>
+
+    {% endfor %}
+
+</section>
+
+
+</body>
+
+</html>

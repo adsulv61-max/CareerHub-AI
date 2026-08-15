@@ -1,0 +1,141 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register - CareerHub AI</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+
+<body>
+
+<div class="auth-page">
+
+    <div class="auth-box">
+
+        <div class="auth-logo">
+            Career<span>Hub AI</span>
+        </div>
+
+        <h2>
+            Create Account 🚀
+        </h2>
+
+        <p class="auth-subtitle">
+            Join CareerHub AI and find your dream job
+        </p>
+
+
+        {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <div class="form-group">
+
+                <label>
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Choose a username"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Create password"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Confirm Password
+                </label>
+
+                <input
+                    type="password"
+                    name="confirm_password"
+                    placeholder="Confirm password"
+                    required
+                >
+
+            </div>
+
+
+            <button type="submit" class="auth-submit">
+                Create Account →
+            </button>
+
+        </form>
+
+
+        <div class="auth-link">
+
+            Already have an account?
+
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+
+        </div>
+
+
+        <a href="{% url 'home' %}" class="back-home">
+            ← Back to Home
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

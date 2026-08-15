@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CareerHub AI | Find Your Next Opportunity</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter, Arial, sans-serif;
+        }
+
+        /* =====================================================
+           LIGHT MODE
+        ===================================================== */
+
+        body {
+            background: #f6f8fc;
+            color: #172033;
+            transition: background .3s ease, color .3s ease;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            height: 74px;
+            background: rgba(255,255,255,.96);
+            border-bottom: 1px solid #e8edf5;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 6%;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            gap: 35px;
+
+            transition: .3s ease;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 900;
+            color: #2563eb;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: #111827;
+            transition: .3s;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            list-style: none;
+            margin-left: auto;
+        }
+
+        .nav-links a {
+            color: #475569;
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .login-btn {
+            background: #2563eb;
+            color: white;
+            padding: 11px 20px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .login-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .history-btn {
+            background: #eff6ff;
+            color: #1d4ed8;
+            padding: 11px 15px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* ================= DARK MODE BUTTON ================= */
+
+        .dark-mode-btn {
+            width: 42px;
+            height: 42px;
+
+            border: 1px solid #dbe3ef;
+            background: #f8fafc;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-size: 19px;
+
+            transition: .3s;
+        }
+
+        .dark-mode-btn:hover {
+            transform: scale(1.05);
+            background: #eff6ff;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            background:
+                radial-gradient(circle at 15% 20%, #dbeafe 0, transparent 30%),
+                radial-gradient(circle at 85% 20%, #e0e7ff 0, transparent 30%),
+                linear-gradient(135deg,#f8fbff,#eef5ff);
+
+            padding: 72px 20px 65px;
+            text-align: center;
+
+            border-bottom: 1px solid #e5eaf2;
+
+            transition: .3s ease;
+        }
+
+        .hero-badge {
+            display: inline-block;
+
+            background: #ffffff;
+            border: 1px solid #dbeafe;
+
+            color: #2563eb;
+
+            padding: 8px 15px;
+            border-radius: 30px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            max-width: 850px;
+            margin: auto;
+
+            font-size: 48px;
+            line-height: 1.12;
+
+            color: #0f172a;
+
+            letter-spacing: -1.5px;
+
+            transition: .3s;
+        }
+
+        .hero h1 span {
+            color: #2563eb;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 18px auto 30px;
+
+            color: #64748b;
+
+            font-size: 17px;
+            line-height: 1.7;
+
+            transition: .3s;
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search-wrapper {
+            max-width: 1050px;
+            margin: auto;
+        }
+
+        .search-box {
+            background: white;
+
+            padding: 9px;
+
+            border: 1px solid #dce4ef;
+            border-radius: 14px;
+
+            box-shadow: 0 15px 40px rgba(15,23,42,.10);
+
+            display: flex;
+            gap: 9px;
+
+            transition: .3s;
+        }
+
+        .search-box input {
+            flex: 1;
+
+            border: 0;
+            outline: none;
+
+            padding: 15px;
+
+            font-size: 15px;
+
+            color: #111827;
+            background: transparent;
+
+            transition: .3s;
+        }
+
+        .search-box input::placeholder {
+            color: #94a3b8;
+        }
+
+        .search-btn {
+            border: 0;
+
+            background: #2563eb;
+            color: white;
+
+            padding: 0 28px;
+
+            border-radius: 10px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* ================= QUICK SEARCH ================= */
+
+        .quick-search {
+            margin-top: 17px;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+        .quick-search span {
+            display: inline-block;
+
+            background: white;
+
+            border: 1px solid #e2e8f0;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            margin: 4px;
+
+            color: #475569;
+
+            transition: .3s;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 1200px;
+
+            margin: 45px auto;
+
+            padding: 0 20px 80px;
+
+            transition: .3s;
+        }
+
+        .top-row {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        .top-row h2 {
+            font-size: 25px;
+            color: #111827;
+
+            transition: .3s;
+        }
+
+        .top-row p {
+            margin-top: 5px;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            transition: .3s;
+        }
+
+        .result-count {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* ================= CONTENT GRID ================= */
+
+        .content-grid {
+            display: grid;
+
+            grid-template-columns: 240px 1fr;
+
+            gap: 25px;
+        }
+
+        /* ================= FILTER CARD ================= */
+
+        .filter-card {
+            background: white;
+
+            border: 1px solid #e5eaf2;
+
+            border-radius: 15px;
+
+            padding: 20px;
+
+            height: fit-content;
+
+            position: sticky;
+            top: 95px;
+
+            transition: .3s;
+        }
+
+        .filter-card h3 {
+            font-size: 16px;
+
+            margin-bottom: 20px;
+
+            color: #111827;
+
+            transition: .3s;
+        }
+
+        .filter-title {
+            font-size: 12px;
+
+            font-weight: 800;
+
+            color: #64748b;
+
+            margin: 18px 0 9px;
+
+            text-transform: uppercase;
+        }
+
+        .filter-card select {
+            width: 100%;
+
+            padding: 11px;
+
+            border: 1px solid #dbe3ef;
+
+            border-radius: 8px;
+
+            outline: none;
+
+            background: white;
+
+            color: #374151;
+
+            transition: .3s;
+        }
+
+        .clear-btn {
+            width: 100%;
+
+            border: 0;
+
+            background: #f1f5f9;
+
+            color: #475569;
+
+            padding: 11px;
+
+            border-radius: 8px;
+
+            margin-top: 20px;
+
+            cursor: pointer;
+
+            font-weight: 700;
+
+            transition: .3s;
+        }
+
+        .clear-btn:hover {
+            background: #e2e8f0;
+        }
+
+        /* ================= JOB CARD ================= */
+
+        .job-card {
+            background: white;
+
+            border: 1px solid #e5eaf2;
+
+            border-radius: 16px;
+
+            padding: 23px;
+
+            margin-bottom: 16px;
+
+            transition: .25s ease;
+        }
+
+        .job-card:hover {
+            border-color: #bfdbfe;
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 14px 35px rgba(37,99,235,.09);
+        }
+
+        .job-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .company-logo {
+            width: 52px;
+            height: 52px;
+
+            background: linear-gradient(135deg,#2563eb,#4f46e5);
+
+            color: white;
+
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 900;
+            font-size: 19px;
+
+            flex-shrink: 0;
+        }
+
+        .job-main {
+            display: flex;
+
+            gap: 15px;
+
+            flex: 1;
+        }
+
+        .job-title {
+            color: #111827;
+
+            font-size: 20px;
+
+            margin-bottom: 6px;
+
+            transition: .3s;
+        }
+
+        .company {
+            color: #2563eb;
+
+            font-weight: 700;
+
+            font-size: 14px;
+        }
+
+        .save-btn {
+            width: 40px;
+            height: 40px;
+
+            border: 1px solid #dbe3ef;
+
+            border-radius: 9px;
+
+            background: white;
+
+            cursor: pointer;
+
+            font-size: 20px;
+
+            color: #64748b;
+
+            transition: .3s;
+        }
+
+        .save-btn:hover {
+            color: #2563eb;
+            background: #eff6ff;
+        }
+
+        /* ================= TAGS ================= */
+
+        .tags {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin: 18px 0;
+        }
+
+        .tag {
+            background: #eff6ff;
+
+            color: #1d4ed8;
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+        .salary {
+            background: #ecfdf5;
+            color: #047857;
+        }
+
+        .type {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        /* ================= DESCRIPTION ================= */
+
+        .description {
+            color: #64748b;
+
+            line-height: 1.65;
+
+            font-size: 14px;
+
+            margin-bottom: 15px;
+
+            transition: .3s;
+        }
+
+        /* ================= SKILLS ================= */
+
+        .skills {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin-bottom: 18px;
+        }
+
+        .skill {
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+
+            color: #475569;
+
+            padding: 6px 9px;
+
+            border-radius: 6px;
+
+            font-size: 11px;
+
+            transition: .3s;
+        }
+
+        /* ================= CARD FOOTER ================= */
+
+        .job-footer {
+            border-top: 1px solid #eef2f7;
+
+            padding-top: 16px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            transition: .3s;
+        }
+
+        .posted {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .apply-btn {
+            background: #2563eb;
+
+            color: white;
+
+            padding: 11px 20px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: 800;
+        }
+
+        .apply-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            background: white;
+
+            padding: 70px 20px;
+
+            text-align: center;
+
+            border: 1px solid #e5eaf2;
+
+            border-radius: 16px;
+
+            transition: .3s;
+        }
+
+        .empty-icon {
+            font-size: 50px;
+
+            margin-bottom: 15px;
+        }
+
+        .empty h2 {
+            margin-bottom: 8px;
+
+            transition: .3s;
+        }
+
+        .empty p {
+            color: #64748b;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #0f172a;
+
+            color: #94a3b8;
+
+            padding: 45px 20px;
+
+            text-align: center;
+
+            transition: .3s;
+        }
+
+        footer .footer-logo {
+            color: white;
+
+            font-size: 22px;
+
+            font-weight: 900;
+
+            margin-bottom: 10px;
+        }
+
+        footer .footer-logo span {
+            color: #60a5fa;
+        }
+
+        footer p {
+            font-size: 13px;
+
+            margin-top: 8px;
+        }
+
+
+        /* =====================================================
+           DARK MODE
+        ===================================================== */
+
+        body.dark {
+            background: #0b1120;
+            color: #e5e7eb;
+        }
+
+        body.dark nav {
+            background: #111827;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        body.dark .logo span {
+            color: #f8fafc;
+        }
+
+        body.dark .nav-links a {
+            color: #cbd5e1;
+        }
+
+        body.dark .nav-links a:hover {
+            color: #60a5fa;
+        }
+
+        body.dark .history-btn {
+            background: #172554;
+            color: #93c5fd;
+        }
+
+        body.dark .dark-mode-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #f8fafc;
+        }
+
+        body.dark .dark-mode-btn:hover {
+            background: #334155;
+        }
+
+        /* HERO DARK */
+
+        body.dark .hero {
+            background:
+                radial-gradient(circle at 15% 20%, #172554 0, transparent 30%),
+                radial-gradient(circle at 85% 20%, #1e1b4b 0, transparent 30%),
+                linear-gradient(135deg,#0f172a,#111827);
+
+            border-bottom-color: #1e293b;
+        }
+
+        body.dark .hero-badge {
+            background: #172554;
+            border-color: #1e3a8a;
+            color: #93c5fd;
+        }
+
+        body.dark .hero h1 {
+            color: #f8fafc;
+        }
+
+        body.dark .hero h1 span {
+            color: #60a5fa;
+        }
+
+        body.dark .hero p {
+            color: #94a3b8;
+        }
+
+        /* SEARCH DARK */
+
+        body.dark .search-box {
+            background: #111827;
+
+            border-color: #334155;
+
+            box-shadow: 0 15px 40px rgba(0,0,0,.35);
+        }
+
+        body.dark .search-box input {
+            color: #f8fafc;
+        }
+
+        body.dark .quick-search {
+            color: #94a3b8;
+        }
+
+        body.dark .quick-search span {
+            background: #1e293b;
+            border-color: #334155;
+            color: #cbd5e1;
+        }
+
+        /* MAIN DARK */
+
+        body.dark .top-row h2 {
+            color: #f8fafc;
+        }
+
+        body.dark .top-row p {
+            color: #94a3b8;
+        }
+
+        body.dark .result-count {
+            color: #94a3b8;
+        }
+
+        /* FILTER DARK */
+
+        body.dark .filter-card {
+            background: #111827;
+
+            border-color: #1e293b;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,.20);
+        }
+
+        body.dark .filter-card h3 {
+            color: #f8fafc;
+        }
+
+        body.dark .filter-title {
+            color: #94a3b8;
+        }
+
+        body.dark .filter-card select {
+            background: #1e293b;
+
+            border-color: #334155;
+
+            color: #e2e8f0;
+        }
+
+        body.dark .clear-btn {
+            background: #1e293b;
+            color: #cbd5e1;
+        }
+
+        body.dark .clear-btn:hover {
+            background: #334155;
+        }
+
+        /* JOB CARD DARK */
+
+        body.dark .job-card {
+            background: #111827;
+
+            border-color: #1e293b;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,.18);
+        }
+
+        body.dark .job-card:hover {
+            border-color: #2563eb;
+
+            box-shadow: 0 15px 35px rgba(37,99,235,.18);
+        }
+
+        body.dark .job-title {
+            color: #f8fafc;
+        }
+
+        body.dark .company {
+            color: #60a5fa;
+        }
+
+        body.dark .save-btn {
+            background: #1e293b;
+
+            border-color: #334155;
+
+            color: #94a3b8;
+        }
+
+        body.dark .save-btn:hover {
+            background: #172554;
+            color: #60a5fa;
+        }
+
+        /* TAG DARK */
+
+        body.dark .tag {
+            background: #172554;
+            color: #93c5fd;
+        }
+
+        body.dark .salary {
+            background: #052e16;
+            color: #6ee7b7;
+        }
+
+        body.dark .type {
+            background: #431407;
+            color: #fdba74;
+        }
+
+        /* DESCRIPTION DARK */
+
+        body.dark .description {
+            color: #94a3b8;
+        }
+
+        /* SKILLS DARK */
+
+        body.dark .skill {
+            background: #1e293b;
+
+            border-color: #334155;
+
+            color: #cbd5e1;
+        }
+
+        /* FOOTER LINE DARK */
+
+        body.dark .job-footer {
+            border-top-color: #1e293b;
+        }
+
+        /* EMPTY DARK */
+
+        body.dark .empty {
+            background: #111827;
+
+            border-color: #1e293b;
+        }
+
+        body.dark .empty h2 {
+            color: #f8fafc;
+        }
+
+        body.dark .empty p {
+            color: #94a3b8;
+        }
+
+        /* FOOTER DARK */
+
+        body.dark footer {
+            background: #020617;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 900px) {
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-card {
+                position: static;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-actions {
+                margin-left: auto;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+        }
+
+
+        @media(max-width: 600px) {
+
+            nav {
+                padding: 0 18px;
+            }
+
+            .history-btn {
+                display: none;
+            }
+
+            .hero {
+                padding: 50px 15px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-btn {
+                padding: 14px;
+            }
+
+            .job-main {
+                gap: 10px;
+            }
+
+            .company-logo {
+                width: 44px;
+                height: 44px;
+            }
+
+            .job-title {
+                font-size: 17px;
+            }
+
+            .job-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 13px;
+            }
+
+            .apply-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <div class="logo">
+        Career<span>Hub AI</span>
+    </div>
+
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'job_list' %}">
+                Jobs
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'companies' %}">
+                Companies
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'about' %}">
+                About
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'contact' %}">
+                Contact
+            </a>
+        </li>
+
+    </ul>
+
+
+    <div class="nav-actions">
+
+
+        <!-- DARK MODE -->
+
+        <button
+            class="dark-mode-btn"
+            id="darkModeBtn"
+            onclick="toggleDarkMode()"
+            title="Toggle Dark Mode">
+
+            🌙
+
+        </button>
+
+
+        {% if user.is_authenticated %}
+
+            <a
+                href="{% url 'my_applications' %}"
+                class="history-btn">
+
+                My Applications
+
+            </a>
+
+
+            <a
+                href="{% url 'logout' %}"
+                class="login-btn">
+
+                Logout
+
+            </a>
+
+
+        {% else %}
+
+            <a
+                href="{% url 'login' %}"
+                class="login-btn">
+
+                Login
+
+            </a>
+
+        {% endif %}
+
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-badge">
+
+        ✦ AI-Powered Career Platform
+
+    </div>
+
+
+    <h1>
+
+        Find the right job for your
+
+        <span>
+            future.
+        </span>
+
+    </h1>
+
+
+    <p>
+
+        Discover verified opportunities from growing companies,
+        apply with confidence and take the next step in your career.
+
+    </p>
+
+
+    <div class="search-wrapper">
+
+        <form method="GET">
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ query }}"
+                    placeholder="Search job title, company or skills..."
+                >
+
+
+                <button
+                    type="submit"
+                    class="search-btn">
+
+                    🔎 Search Jobs
+
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <div class="quick-search">
+
+            Popular:
+
+            <span>Python</span>
+            <span>Django</span>
+            <span>Java</span>
+            <span>Web Developer</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+    <div class="top-row">
+
+        <div>
+
+            <h2>
+                Latest Opportunities
+            </h2>
+
+            <p>
+                Explore jobs that match your skills and career goals.
+            </p>
+
+        </div>
+
+
+        <div class="result-count">
+
+            {{ jobs|length }} opportunities
+
+        </div>
+
+    </div>
+
+
+
+    <div class="content-grid">
+
+
+        <!-- ================= FILTERS ================= -->
+
+        <aside class="filter-card">
+
+            <h3>
+                ⚙ Job Filters
+            </h3>
+
+
+            <div class="filter-title">
+                Job Type
+            </div>
+
+
+            <select id="typeFilter">
+
+                <option value="">
+                    All Types
+                </option>
+
+                <option value="Full Time">
+                    Full Time
+                </option>
+
+                <option value="Part Time">
+                    Part Time
+                </option>
+
+                <option value="Internship">
+                    Internship
+                </option>
+
+                <option value="Remote">
+                    Remote
+                </option>
+
+            </select>
+
+
+            <div class="filter-title">
+                Location
+            </div>
+
+
+            <select id="locationFilter">
+
+                <option value="">
+                    All Locations
+                </option>
+
+                <option value="Pune">
+                    Pune
+                </option>
+
+                <option value="Mumbai">
+                    Mumbai
+                </option>
+
+                <option value="Bangalore">
+                    Bangalore
+                </option>
+
+                <option value="Hyderabad">
+                    Hyderabad
+                </option>
+
+                <option value="Remote">
+                    Remote
+                </option>
+
+            </select>
+
+
+            <button
+                class="clear-btn"
+                onclick="clearFilters()">
+
+                Clear Filters
+
+            </button>
+
+        </aside>
+
+
+
+        <!-- ================= JOBS ================= -->
+
+        <section id="jobList">
+
+
+            {% for job in jobs %}
+
+
+            <article
+                class="job-card"
+                data-type="{{ job.job_type }}"
+                data-location="{{ job.location }}">
+
+
+                <div class="job-header">
+
+
+                    <div class="job-main">
+
+
+                        <div class="company-logo">
+
+                            {{ job.company|first|upper }}
+
+                        </div>
+
+
+                        <div>
+
+
+                            <h2 class="job-title">
+
+                                {{ job.title }}
+
+                            </h2>
+
+
+                            <div class="company">
+
+                                {{ job.company }}
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <button
+                        class="save-btn"
+                        onclick="saveJob(this)"
+                        title="Save Job">
+
+                        ♡
+
+                    </button>
+
+
+                </div>
+
+
+
+                <div class="tags">
+
+
+                    <span class="tag">
+
+                        📍 {{ job.location }}
+
+                    </span>
+
+
+                    {% if job.salary %}
+
+                    <span class="tag salary">
+
+                        ₹ {{ job.salary }}
+
+                    </span>
+
+                    {% endif %}
+
+
+                    <span class="tag type">
+
+                        💼 {{ job.job_type }}
+
+                    </span>
+
+
+                </div>
+
+
+
+                <p class="description">
+
+                    {{ job.description|truncatewords:35 }}
+
+                </p>
+
+
+
+                <div class="skills">
+
+
+                    {% for skill in job.skills.split %}
+
+                        <span class="skill">
+
+                            {{ skill }}
+
+                        </span>
+
+                    {% endfor %}
+
+
+                </div>
+
+
+
+                <div class="job-footer">
+
+
+                    <span class="posted">
+
+                        🚀 New opportunity
+
+                    </span>
+
+
+                    <a
+                        href="{% url 'apply_job' job.id %}"
+                        class="apply-btn">
+
+                        Apply Now →
+
+                    </a>
+
+
+                </div>
+
+
+            </article>
+
+
+            {% empty %}
+
+
+            <div class="empty">
+
+
+                <div class="empty-icon">
+
+                    🔍
+
+                </div>
+
+
+                <h2>
+
+                    No opportunities found
+
+                </h2>
+
+
+                <p>
+
+                    Try another keyword, company or skill.
+
+                </p>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </section>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+
+    <div class="footer-logo">
+
+        Career<span>Hub AI</span>
+
+    </div>
+
+
+    <p>
+
+        Connecting talented people with better opportunities.
+
+    </p>
+
+
+    <p>
+
+        © 2026 CareerHub AI · Developed by Vikrant Adsul
+
+    </p>
+
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* ================= SAVE JOB ================= */
+
+function saveJob(button) {
+
+    if (button.innerHTML.includes("♡")) {
+
+        button.innerHTML = "♥";
+
+        button.style.color = "#2563eb";
+
+    }
+
+    else {
+
+        button.innerHTML = "♡";
+
+        button.style.color = "";
+
+    }
+
+}
+
+
+
+/* ================= FILTER JOBS ================= */
+
+function filterJobs() {
+
+    const type =
+        document
+        .getElementById("typeFilter")
+        .value
+        .toLowerCase();
+
+
+    const location =
+        document
+        .getElementById("locationFilter")
+        .value
+        .toLowerCase();
+
+
+    const cards =
+        document.querySelectorAll(".job-card");
+
+
+    cards.forEach(function(card) {
+
+
+        const cardType =
+            card.dataset.type.toLowerCase();
+
+
+        const cardLocation =
+            card.dataset.location.toLowerCase();
+
+
+        const typeMatch =
+            type === "" ||
+            cardType.includes(type);
+
+
+        const locationMatch =
+            location === "" ||
+            cardLocation.includes(location);
+
+
+        if (typeMatch && locationMatch) {
+
+            card.style.display = "block";
+
+        }
+
+        else {
+
+            card.style.display = "none";
+
+        }
+
+
+    });
+
+}
+
+
+
+/* ================= FILTER EVENTS ================= */
+
+document
+    .getElementById("typeFilter")
+    .addEventListener("change", filterJobs);
+
+
+document
+    .getElementById("locationFilter")
+    .addEventListener("change", filterJobs);
+
+
+
+/* ================= CLEAR FILTER ================= */
+
+function clearFilters() {
+
+    document
+        .getElementById("typeFilter")
+        .value = "";
+
+
+    document
+        .getElementById("locationFilter")
+        .value = "";
+
+
+    filterJobs();
+
+}
+
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+function toggleDarkMode() {
+
+    document.body.classList.toggle("dark");
+
+
+    const button =
+        document.getElementById("darkModeBtn");
+
+
+    if (document.body.classList.contains("dark")) {
+
+        button.innerHTML = "☀️";
+
+        localStorage.setItem(
+            "careerhub-dark",
+            "true"
+        );
+
+    }
+
+    else {
+
+        button.innerHTML = "🌙";
+
+        localStorage.setItem(
+            "careerhub-dark",
+            "false"
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   LOAD SAVED DARK MODE
+===================================================== */
+
+window.addEventListener("DOMContentLoaded", function() {
+
+
+    const darkMode =
+        localStorage.getItem("careerhub-dark");
+
+
+    const button =
+        document.getElementById("darkModeBtn");
+
+
+    if (darkMode === "true") {
+
+        document.body.classList.add("dark");
+
+        button.innerHTML = "☀️";
+
+    }
+
+    else {
+
+        button.innerHTML = "🌙";
+
+    }
+
+
+});
+
+</script>
+
+
+</body>
+
+</html>

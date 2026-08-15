@@ -1,0 +1,548 @@
+{% extends "base.html" %}
+
+{% block title %}
+CareerHub AI | Companies
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    /* ================= COMPANIES PAGE ================= */
+
+    .companies-page {
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        transition: .3s;
+    }
+
+    .companies-header {
+        text-align: center;
+        padding: 70px 20px 45px;
+    }
+
+    .companies-header h1 {
+        font-size: 45px;
+        margin-bottom: 15px;
+        color: var(--text);
+    }
+
+    .companies-header h1 span {
+        color: var(--blue);
+    }
+
+    .companies-header p {
+        color: var(--text-light);
+        font-size: 17px;
+    }
+
+    /* ================= COMPANY GRID ================= */
+
+    .companies-grid {
+        max-width: 1150px;
+        margin: auto;
+        padding: 20px 20px 90px;
+
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+
+    /* ================= COMPANY CARD ================= */
+
+    .company-card {
+        background: var(--card);
+        color: var(--text);
+
+        padding: 30px;
+
+        border-radius: 16px;
+
+        border: 1px solid var(--border);
+
+        box-shadow:
+            0 8px 25px rgba(0,0,0,.05);
+
+        transition:
+            transform .25s,
+            background .3s,
+            border .3s,
+            box-shadow .25s;
+    }
+
+    .company-card:hover {
+        transform: translateY(-6px);
+
+        border-color: var(--blue);
+
+        box-shadow:
+            0 15px 35px rgba(37,99,235,.15);
+    }
+
+    /* ================= ICON ================= */
+
+    .company-icon {
+
+        width: 58px;
+        height: 58px;
+
+        background: #eff6ff;
+
+        border-radius: 13px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 28px;
+
+        margin-bottom: 20px;
+
+        transition: .3s;
+    }
+
+    body.dark-mode .company-icon {
+        background: #172554;
+    }
+
+    /* ================= COMPANY TEXT ================= */
+
+    .company-card h2 {
+
+        margin-bottom: 8px;
+
+        color: var(--text);
+
+        font-size: 22px;
+    }
+
+    .location {
+
+        color: var(--blue) !important;
+
+        font-size: 13px !important;
+
+        font-weight: 700;
+
+        margin-bottom: 12px !important;
+    }
+
+    .company-description {
+
+        color: var(--text-light);
+
+        line-height: 1.6;
+
+        margin-bottom: 20px;
+
+        font-size: 14px;
+    }
+
+    /* ================= JOB BUTTON ================= */
+
+    .view-jobs {
+
+        display: inline-block;
+
+        background: var(--blue);
+
+        color: white !important;
+
+        text-decoration: none;
+
+        padding: 10px 18px;
+
+        border-radius: 8px;
+
+        font-weight: bold;
+
+        transition: .2s;
+    }
+
+    .view-jobs:hover {
+
+        transform: translateY(-2px);
+
+        opacity: .9;
+    }
+
+    /* ================= DARK MODE EXTRA ================= */
+
+    body.dark-mode .company-card {
+
+        box-shadow:
+            0 10px 30px rgba(0,0,0,.25);
+    }
+
+    body.dark-mode .company-card:hover {
+
+        border-color: #60a5fa;
+
+        box-shadow:
+            0 15px 35px rgba(37,99,235,.20);
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width: 900px) {
+
+        .companies-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media(max-width: 650px) {
+
+        .companies-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .companies-header h1 {
+            font-size: 35px;
+        }
+    }
+
+</style>
+
+
+<div class="companies-page">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <section class="companies-header">
+
+        <h1>
+            Explore
+            <span>Top Companies</span>
+        </h1>
+
+        <p>
+            Discover leading companies and explore exciting career opportunities.
+        </p>
+
+    </section>
+
+
+    <!-- ================= COMPANIES ================= -->
+
+    <section class="companies-grid">
+
+
+        <!-- TCS -->
+
+        <div class="company-card">
+
+            <div class="company-icon">
+                💻
+            </div>
+
+            <h2>
+                TCS
+            </h2>
+
+            <p class="location">
+                📍 India · IT Services
+            </p>
+
+            <p class="company-description">
+                Tata Consultancy Services provides technology,
+                consulting and software solutions across the world.
+            </p>
+
+            <a
+                href="/jobs/?company=TCS"
+                class="view-jobs"
+            >
+                View TCS Jobs →
+            </a>
+
+        </div>
+
+
+        <!-- INFOSYS -->
+
+        <div class="company-card">
+
+            <div class="company-icon">
+                🚀
+            </div>
+
+            <h2>
+                Infosys
+            </h2>
+
+            <p class="location">
+                📍 Bangalore · Technology
+            </p>
+
+            <p class="company-description">
+                Global technology company providing digital services,
+                consulting and software solutions.
+            </p>
+
+            <a
+                href="/jobs/?company=Infosys"
+                class="view-jobs"
+            >
+                View Infosys Jobs →
+            </a>
+
+        </div>
+
+
+        <!-- WIPRO -->
+
+        <div class="company-card">
+
+            <div class="company-icon">
+                🏢
+            </div>
+
+            <h2>
+                Wipro
+            </h2>
+
+            <p class="location">
+                📍 Bangalore · IT Services
+            </p>
+
+            <p class="company-description">
+                Technology and consulting company working across
+                software, cloud and digital technologies.
+            </p>
+
+            <a
+                href="/jobs/?company=Wipro"
+                class="view-jobs"
+            >
+                View Wipro Jobs →
+            </a>
+
+        </div>
+
+
+        <!-- ACCENTURE -->
+
+        <div class="company-card">
+
+            <div class="company-icon">
+                🌐
+            </div>
+
+            <h2>
+                Accenture
+            </h2>
+
+            <p class="location">
+                📍 Mumbai · Consulting
+            </p>
+
+            <p class="company-description">
+                Global professional services company focused on
+                technology, cloud and digital transformation.
+            </p>
+
+            <a
+                href="/jobs/?company=Accenture"
+                class="view-jobs"
+            >
+                View Accenture Jobs →
+            </a>
+
+        </div>
+
+
+        <!-- MICROSOFT -->
+
+        <div class="company-card">
+
+            <div class="company-icon">
+                ⚡
+            </div>
+
+            <h2>
+                Microsoft
+            </h2>
+
+            <p class="location">
+                📍 Hyderabad · Technology
+            </p>
+
+            <p class="company-description">
+                Technology company building software, cloud services,
+                AI products and digital solutions.
+            </p>
+
+            <a
+                href="/jobs/?company=Microsoft"
+                class="view-jobs"
+            >
+                View Microsoft Jobs →
+            </a>
+
+        </div>
+
+
+        <!-- GOOGLE -->
+
+        <div class="company-card">
+
+            <div class="company-icon">
+                🤖
+            </div>
+
+            <h2>
+                Google
+            </h2>
+
+            <p class="location">
+                📍 Bangalore · AI & Technology
+            </p>
+
+            <p class="company-description">
+                Technology company focused on search,
+                artificial intelligence, cloud and digital products.
+            </p>
+
+            <a
+                href="/jobs/?company=Google"
+                class="view-jobs"
+            >
+                View Google Jobs →
+            </a>
+
+        </div>
+
+
+        <!-- IBM -->
+
+        <div class="company-card">
+
+            <div class="company-icon">
+                🔵
+            </div>
+
+            <h2>
+                IBM
+            </h2>
+
+            <p class="location">
+                📍 Pune · AI & Cloud
+            </p>
+
+            <p class="company-description">
+                IBM works in artificial intelligence, cloud computing,
+                software and enterprise technology solutions.
+            </p>
+
+            <a
+                href="/jobs/?company=IBM"
+                class="view-jobs"
+            >
+                View IBM Jobs →
+            </a>
+
+        </div>
+
+
+        <!-- COGNIZANT -->
+
+        <div class="company-card">
+
+            <div class="company-icon">
+                🧠
+            </div>
+
+            <h2>
+                Cognizant
+            </h2>
+
+            <p class="location">
+                📍 Pune · Digital Technology
+            </p>
+
+            <p class="company-description">
+                Cognizant provides digital transformation,
+                technology consulting and software services.
+            </p>
+
+            <a
+                href="/jobs/?company=Cognizant"
+                class="view-jobs"
+            >
+                View Cognizant Jobs →
+            </a>
+
+        </div>
+
+
+        <!-- CAPGEMINI -->
+
+        <div class="company-card">
+
+            <div class="company-icon">
+                💡
+            </div>
+
+            <h2>
+                Capgemini
+            </h2>
+
+            <p class="location">
+                📍 Pune · Consulting & IT
+            </p>
+
+            <p class="company-description">
+                Capgemini delivers technology services,
+                consulting and digital transformation solutions.
+            </p>
+
+            <a
+                href="/jobs/?company=Capgemini"
+                class="view-jobs"
+            >
+                View Capgemini Jobs →
+            </a>
+
+        </div>
+
+
+        <!-- TECH MAHINDRA -->
+
+        <div class="company-card">
+
+            <div class="company-icon">
+                📡
+            </div>
+
+            <h2>
+                Tech Mahindra
+            </h2>
+
+            <p class="location">
+                📍 Pune · IT & Telecom
+            </p>
+
+            <p class="company-description">
+                Tech Mahindra provides technology, telecom,
+                software and digital business solutions.
+            </p>
+
+            <a
+                href="/jobs/?company=Tech Mahindra"
+                class="view-jobs"
+            >
+                View Tech Mahindra Jobs →
+            </a>
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+{% endblock %}
