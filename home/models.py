@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+# =====================================================
+# CHAT HISTORY
+# =====================================================
+
 class ChatHistory(models.Model):
 
     user = models.ForeignKey(
@@ -20,6 +24,67 @@ class ChatHistory(models.Model):
     def __str__(self):
         return self.question
 
+
+# =====================================================
+# USER PROFILE
+# =====================================================
+
+class Profile(models.Model):
+
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    full_name = models.CharField(
+        max_length=200,
+        blank=True
+    )
+
+    phone = models.CharField(
+        max_length=20,
+        blank=True
+    )
+
+    location = models.CharField(
+        max_length=200,
+        blank=True
+    )
+
+    education = models.CharField(
+        max_length=300,
+        blank=True
+    )
+
+    skills = models.TextField(
+        blank=True
+    )
+
+    bio = models.TextField(
+        blank=True
+    )
+
+    github = models.URLField(
+        blank=True
+    )
+
+    linkedin = models.URLField(
+        blank=True
+    )
+
+    profile_image = models.ImageField(
+        upload_to="profiles/",
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return self.user.username
+
+
+# =====================================================
+# JOB APPLICATIONS
+# =====================================================
 
 class Application(models.Model):
 

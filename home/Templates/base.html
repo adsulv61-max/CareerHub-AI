@@ -2,9 +2,11 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{% block title %}CareerHub AI{% endblock %}</title>
@@ -17,7 +19,7 @@
             --bg: #f5f7fb;
             --card: #ffffff;
             --text: #172033;
-            --muted: #64748b;
+            --muted: #475569;
             --border: #e5eaf2;
             --nav: #ffffff;
             --blue: #2563eb;
@@ -28,7 +30,7 @@
             --bg: #0b1120;
             --card: #111827;
             --text: #f8fafc;
-            --muted: #94a3b8;
+            --muted: #cbd5e1;
             --border: #263244;
             --nav: #0f172a;
             --blue: #60a5fa;
@@ -52,6 +54,8 @@
             transition: background .3s, color .3s;
         }
 
+        /* ================= NAVBAR ================= */
+
         nav {
             min-height: 72px;
             background: var(--nav);
@@ -60,7 +64,7 @@
             display: flex;
             align-items: center;
 
-            padding: 0 6%;
+            padding: 0 4%;
 
             position: sticky;
             top: 0;
@@ -69,59 +73,162 @@
             transition: .3s;
         }
 
+        /* ================= LOGO ================= */
+
         .logo {
-            font-size: 25px;
+            font-size: 28px;
             font-weight: 900;
-            color: var(--blue);
+            color: #2563eb;
+
+            white-space: nowrap;
+
+            letter-spacing: -1px;
+
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .logo span {
             color: var(--text);
         }
 
+        /* ================= NAV LINKS ================= */
+
         nav ul {
             margin-left: auto;
+
             display: flex;
             align-items: center;
-            gap: 22px;
+
+            gap: 20px;
+
             list-style: none;
         }
 
-        nav a {
-            color: var(--muted);
-            text-decoration: none;
-            font-weight: 700;
+        nav ul li {
+            display: flex;
+            align-items: center;
         }
 
-        nav a:hover {
-            color: var(--blue);
+        nav ul li a {
+            color: var(--muted);
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            font-size: 16px;
+
+            padding: 8px 2px;
+
+            transition:
+                color .2s,
+                transform .2s;
         }
+
+        nav ul li a:hover {
+            color: var(--blue);
+
+            transform: translateY(-1px);
+        }
+
+        /* ================= PROFILE ================= */
+
+        .profile-link {
+            color: var(--muted) !important;
+        }
+
+        .profile-link:hover {
+            color: var(--blue) !important;
+        }
+
+        /* ================= APPLICATIONS ================= */
+
+        .applications-link {
+            color: var(--muted) !important;
+        }
+
+        .applications-link:hover {
+            color: var(--blue) !important;
+        }
+
+        /* ================= AI ================= */
+
+        .ai-link {
+            color: var(--muted) !important;
+        }
+
+        .ai-link:hover {
+            color: var(--blue) !important;
+        }
+
+        /* ================= DARK MODE ================= */
 
         .dark-mode-btn {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
 
             border: 1px solid var(--border);
+
             border-radius: 10px;
 
             background: var(--card);
+
             color: var(--text);
 
             cursor: pointer;
+
             font-size: 19px;
+
+            transition: .2s;
         }
+
+        .dark-mode-btn:hover {
+            transform: translateY(-2px);
+
+            border-color: var(--blue);
+        }
+
+        /* ================= USER NAME ================= */
+
+        .user-name {
+            color: var(--muted);
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            font-size: 15px;
+        }
+
+        /* ================= LOGIN / LOGOUT ================= */
 
         .login-btn {
             background: var(--blue);
+
             color: white !important;
 
-            padding: 10px 18px;
+            padding: 10px 18px !important;
+
             border-radius: 9px;
 
             text-decoration: none;
+
+            font-weight: 700;
+
+            transition: .2s;
         }
 
-        /* ALL COMMON CARDS */
+        .login-btn:hover {
+            background: #1d4ed8;
+
+            color: white !important;
+
+            transform: translateY(-1px);
+        }
+
+        /* ================= COMMON CARDS ================= */
 
         .card,
         .company-card,
@@ -129,10 +236,15 @@
         .feature-card,
         .stat-card,
         .hero-card {
+
             background: var(--card);
+
             color: var(--text);
+
             border: 1px solid var(--border);
         }
+
+        /* ================= TEXT ================= */
 
         h1,
         h2,
@@ -145,132 +257,338 @@
             color: var(--muted);
         }
 
+        /* ================= FORM ================= */
+
         input,
         textarea,
         select {
+
             background: var(--card);
+
             color: var(--text);
+
             border: 1px solid var(--border);
         }
 
         input::placeholder,
         textarea::placeholder {
+
             color: var(--muted);
         }
 
+        /* ================= FOOTER ================= */
+
         footer {
+
             background: var(--footer);
+
             color: #94a3b8;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width: 1100px) {
+
+            nav {
+                padding: 0 2%;
+            }
+
+            nav ul {
+                gap: 12px;
+            }
+
+            nav ul li a {
+                font-size: 14px;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
         }
 
         @media(max-width: 750px) {
 
-            nav ul {
-                gap: 8px;
+            nav {
+
+                min-height: auto;
+
+                padding: 15px;
+
+                flex-wrap: wrap;
             }
 
+            .logo {
+
+                width: 100%;
+
+                justify-content: center;
+
+                margin-bottom: 12px;
+            }
+
+            nav ul {
+
+                width: 100%;
+
+                margin-left: 0;
+
+                justify-content: center;
+
+                flex-wrap: wrap;
+
+                gap: 10px 16px;
+            }
+
+            nav ul li a {
+
+                font-size: 14px;
+            }
+
+            .user-name {
+
+                display: none;
+            }
         }
 
     </style>
 
 </head>
 
+
 <body>
+
+
+<!-- ================= NAVBAR ================= -->
 
 <nav>
 
+
+    <!-- LOGO -->
+
     <div class="logo">
-        Career<span>Hub AI</span>
+
+        <span style="color:#2563eb;">
+            Career
+        </span>
+
+        <span>
+            Hub AI
+        </span>
+
     </div>
+
+
+    <!-- NAVIGATION -->
 
     <ul>
 
-        <li>
-            <a href="{% url 'home' %}">Home</a>
-        </li>
+
+        <!-- HOME -->
 
         <li>
-            <a href="{% url 'job_list' %}">Jobs</a>
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
         </li>
+
+
+        <!-- JOBS -->
 
         <li>
-            <a href="{% url 'companies' %}">Companies</a>
+
+            <a href="{% url 'job_list' %}">
+                Jobs
+            </a>
+
         </li>
+
+
+        <!-- COMPANIES -->
 
         <li>
-            <a href="{% url 'about' %}">About Us</a>
+
+            <a href="{% url 'companies' %}">
+                Companies
+            </a>
+
         </li>
+
+
+        <!-- ABOUT -->
 
         <li>
-            <a href="{% url 'contact' %}">Contact</a>
+
+            <a href="{% url 'about' %}">
+                About Us
+            </a>
+
         </li>
+
+
+        <!-- CONTACT -->
 
         <li>
-            <a href="{% url 'ai_chat' %}">🤖 AI</a>
+
+            <a href="{% url 'contact' %}">
+                Contact
+            </a>
+
         </li>
 
-        <!-- DARK MODE -->
 
-        <li>
-            <button
-                id="darkModeBtn"
-                class="dark-mode-btn"
-                onclick="toggleDarkMode()">
-                🌙
-            </button>
-        </li>
+        <!-- PROFILE -->
 
         {% if user.is_authenticated %}
 
             <li>
-                <span style="color:var(--muted);">
-                    Hello, {{ user.username }}
-                </span>
+
+                <a
+                    href="{% url 'profile' %}"
+                    class="profile-link"
+                >
+                    👤 Profile
+                </a>
+
             </li>
 
-            <li>
-                <a href="{% url 'logout' %}" class="login-btn">
-                    Logout
-                </a>
-            </li>
 
-        {% else %}
+            <!-- APPLICATIONS -->
 
             <li>
-                <a href="{% url 'login' %}" class="login-btn">
-                    Login
-                </a>
-            </li>
 
-            <li>
-                <a href="{% url 'register' %}">
-                    Register
+                <a
+                    href="{% url 'my_applications' %}"
+                    class="applications-link"
+                >
+                    📋 Applications
                 </a>
+
             </li>
 
         {% endif %}
+
+
+        <!-- AI -->
+
+        <li>
+
+            <a
+                href="{% url 'ai_chat' %}"
+                class="ai-link"
+            >
+                🤖 AI
+            </a>
+
+        </li>
+
+
+        <!-- DARK MODE -->
+
+        <li>
+
+            <button
+                id="darkModeBtn"
+                class="dark-mode-btn"
+                onclick="toggleDarkMode()"
+                type="button"
+            >
+                🌙
+            </button>
+
+        </li>
+
+
+        <!-- USER -->
+
+        {% if user.is_authenticated %}
+
+            <li>
+
+                <span class="user-name">
+
+                    Hello, {{ user.username }}
+
+                </span>
+
+            </li>
+
+
+            <!-- LOGOUT -->
+
+            <li>
+
+                <a
+                    href="{% url 'logout' %}"
+                    class="login-btn"
+                >
+                    Logout
+                </a>
+
+            </li>
+
+
+        {% else %}
+
+
+            <!-- LOGIN -->
+
+            <li>
+
+                <a
+                    href="{% url 'login' %}"
+                    class="login-btn"
+                >
+                    Login
+                </a>
+
+            </li>
+
+
+            <!-- REGISTER -->
+
+            <li>
+
+                <a href="{% url 'register' %}">
+                    Register
+                </a>
+
+            </li>
+
+        {% endif %}
+
 
     </ul>
 
 </nav>
 
 
-<!-- PAGE CONTENT -->
+<!-- ================= PAGE CONTENT ================= -->
 
 {% block content %}
 
 {% endblock %}
 
 
+<!-- ================= FOOTER ================= -->
+
 <footer>
 
-    <div style="text-align:center;padding:30px;">
+    <div
+        style="
+            text-align:center;
+            padding:30px;
+        "
+    >
 
         © 2026 CareerHub AI
 
-        <br><br>
+        <br>
+        <br>
 
         Developed by
+
         <strong style="color:#60a5fa;">
             Vikrant Adsul
         </strong>
@@ -279,6 +597,8 @@
 
 </footer>
 
+
+<!-- ================= DARK MODE SCRIPT ================= -->
 
 <script>
 
@@ -289,7 +609,10 @@ function toggleDarkMode() {
     const button =
         document.getElementById("darkModeBtn");
 
-    if (document.body.classList.contains("dark-mode")) {
+
+    if (
+        document.body.classList.contains("dark-mode")
+    ) {
 
         button.innerHTML = "☀️";
 
@@ -298,7 +621,9 @@ function toggleDarkMode() {
             "dark"
         );
 
-    } else {
+    }
+
+    else {
 
         button.innerHTML = "🌙";
 
@@ -312,27 +637,41 @@ function toggleDarkMode() {
 }
 
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    const theme =
-        localStorage.getItem("careerhub-theme");
+        const theme =
+            localStorage.getItem(
+                "careerhub-theme"
+            );
 
-    const button =
-        document.getElementById("darkModeBtn");
+        const button =
+            document.getElementById(
+                "darkModeBtn"
+            );
 
-    if (theme === "dark") {
 
-        document.body.classList.add("dark-mode");
+        if (theme === "dark") {
 
-        if (button) {
-            button.innerHTML = "☀️";
+            document.body.classList.add(
+                "dark-mode"
+            );
+
+            if (button) {
+
+                button.innerHTML = "☀️";
+
+            }
+
         }
 
     }
-
-});
+);
 
 </script>
 
+
 </body>
+
 </html>

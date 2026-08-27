@@ -1,0 +1,758 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile | CareerHub AI{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .profile-page {
+        min-height: calc(100vh - 70px);
+        padding: 40px 5%;
+        background: #f5f7fb;
+    }
+
+    .profile-container {
+        max-width: 1100px;
+        margin: auto;
+    }
+
+    /* ================= HEADER ================= */
+
+    .profile-header {
+        margin-bottom: 25px;
+    }
+
+    .profile-header h1 {
+        font-size: 34px;
+        color: #111827;
+        margin-bottom: 8px;
+    }
+
+    .profile-header p {
+        color: #64748b;
+    }
+
+    /* ================= PROFILE TOP ================= */
+
+    .profile-top {
+        background: linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5
+        );
+
+        color: white;
+
+        border-radius: 22px;
+
+        padding: 30px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 25px;
+
+        margin-bottom: 25px;
+
+        box-shadow:
+            0 15px 35px rgba(37,99,235,.25);
+    }
+
+    .profile-user {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    /* ================= AVATAR ================= */
+
+    .profile-avatar {
+        width: 90px;
+        height: 90px;
+
+        border-radius: 50%;
+
+        background: white;
+
+        color: #2563eb;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 38px;
+        font-weight: bold;
+
+        overflow: hidden;
+
+        flex-shrink: 0;
+
+        box-shadow:
+            0 8px 20px rgba(0,0,0,.15);
+    }
+
+    .profile-avatar img {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+    }
+
+    .profile-user h2 {
+        font-size: 25px;
+        margin-bottom: 5px;
+    }
+
+    .profile-user p {
+        color: #dbeafe;
+        margin: 4px 0;
+    }
+
+    /* ================= COMPLETION ================= */
+
+    .completion {
+        min-width: 220px;
+    }
+
+    .completion-top {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 8px;
+
+        font-size: 14px;
+    }
+
+    .completion-bar {
+        width: 100%;
+        height: 10px;
+
+        background: rgba(255,255,255,.25);
+
+        border-radius: 20px;
+
+        overflow: hidden;
+    }
+
+    .completion-fill {
+        height: 100%;
+
+        background: white;
+
+        border-radius: 20px;
+
+        transition: width .5s ease;
+    }
+
+    /* ================= FORM CARD ================= */
+
+    .profile-card {
+        background: white;
+
+        border-radius: 20px;
+
+        padding: 30px;
+
+        border: 1px solid #e2e8f0;
+
+        box-shadow:
+            0 10px 30px rgba(0,0,0,.06);
+    }
+
+    .profile-card h2 {
+        color: #111827;
+
+        font-size: 21px;
+
+        margin-bottom: 25px;
+    }
+
+    /* ================= FORM ================= */
+
+    .form-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+
+        flex-direction: column;
+    }
+
+    .form-group.full {
+        grid-column: 1 / -1;
+    }
+
+    .form-group label {
+        font-size: 14px;
+
+        font-weight: bold;
+
+        color: #475569;
+
+        margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+
+        box-sizing: border-box;
+
+        padding: 13px 15px;
+
+        border: 1px solid #dbe3ef;
+
+        border-radius: 10px;
+
+        outline: none;
+
+        font-size: 15px;
+
+        color: #1e293b;
+
+        background: white;
+
+        transition: .2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #2563eb;
+
+        box-shadow:
+            0 0 0 3px
+            rgba(37,99,235,.10);
+    }
+
+    .form-group textarea {
+        min-height: 120px;
+
+        resize: vertical;
+    }
+
+    /* ================= FILE INPUT ================= */
+
+    .file-input {
+        padding: 11px !important;
+
+        background: #f8fafc !important;
+
+        cursor: pointer;
+    }
+
+    .file-help {
+        margin-top: 7px;
+
+        font-size: 12px;
+
+        color: #64748b;
+    }
+
+    /* ================= PHOTO PREVIEW ================= */
+
+    .photo-preview {
+        margin-top: 12px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 15px;
+    }
+
+    .preview-image {
+        width: 65px;
+        height: 65px;
+
+        border-radius: 50%;
+
+        object-fit: cover;
+
+        border: 3px solid #2563eb;
+    }
+
+    /* ================= SAVE BUTTON ================= */
+
+    .save-btn {
+        margin-top: 25px;
+
+        width: 100%;
+
+        padding: 15px;
+
+        border: none;
+
+        border-radius: 11px;
+
+        background: #2563eb;
+
+        color: white;
+
+        font-size: 16px;
+
+        font-weight: bold;
+
+        cursor: pointer;
+
+        transition: .2s;
+    }
+
+    .save-btn:hover {
+        background: #1d4ed8;
+
+        transform: translateY(-1px);
+    }
+
+    /* ================= INFO ================= */
+
+    .profile-info {
+        margin-top: 20px;
+
+        padding: 15px;
+
+        border-radius: 10px;
+
+        background: #eff6ff;
+
+        border-left: 4px solid #2563eb;
+
+        color: #1e40af;
+
+        line-height: 1.6;
+
+        font-size: 14px;
+    }
+
+    /* ================= DARK MODE ================= */
+
+    body.dark .profile-page {
+        background: #0f172a;
+    }
+
+    body.dark .profile-header h1 {
+        color: #f8fafc;
+    }
+
+    body.dark .profile-header p {
+        color: #94a3b8;
+    }
+
+    body.dark .profile-card {
+        background: #111827;
+
+        border-color: #1e293b;
+
+        box-shadow:
+            0 15px 40px rgba(0,0,0,.25);
+    }
+
+    body.dark .profile-card h2 {
+        color: #f8fafc;
+    }
+
+    body.dark .form-group label {
+        color: #cbd5e1;
+    }
+
+    body.dark .form-group input,
+    body.dark .form-group textarea {
+        background: #0f172a;
+
+        border-color: #334155;
+
+        color: #f8fafc;
+    }
+
+    body.dark .file-input {
+        background: #0f172a !important;
+    }
+
+    body.dark .profile-info {
+        background: #172554;
+
+        color: #bfdbfe;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media(max-width: 700px) {
+
+        .profile-page {
+            padding: 25px 15px;
+        }
+
+        .profile-top {
+            flex-direction: column;
+
+            text-align: center;
+        }
+
+        .profile-user {
+            flex-direction: column;
+        }
+
+        .completion {
+            width: 100%;
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group.full {
+            grid-column: auto;
+        }
+
+        .profile-header h1 {
+            font-size: 28px;
+        }
+
+    }
+
+</style>
+
+
+<div class="profile-page">
+
+    <div class="profile-container">
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="profile-header">
+
+            <h1>
+                👤 My Profile
+            </h1>
+
+            <p>
+                Keep your career profile updated to get better AI recommendations.
+            </p>
+
+        </div>
+
+
+        <!-- ================= PROFILE TOP ================= -->
+
+        <div class="profile-top">
+
+            <div class="profile-user">
+
+                <div class="profile-avatar">
+
+                    {% if profile.profile_image %}
+
+                        <img
+                            src="{{ profile.profile_image.url }}"
+                            alt="Profile Photo"
+                        >
+
+                    {% elif profile.full_name %}
+
+                        {{ profile.full_name|first|upper }}
+
+                    {% else %}
+
+                        {{ user.username|first|upper }}
+
+                    {% endif %}
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+
+                        {% if profile.full_name %}
+
+                            {{ profile.full_name }}
+
+                        {% else %}
+
+                            {{ user.username }}
+
+                        {% endif %}
+
+                    </h2>
+
+                    <p>
+                        📧 {{ user.email }}
+                    </p>
+
+                    {% if profile.location %}
+
+                        <p>
+                            📍 {{ profile.location }}
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= COMPLETION ================= -->
+
+            <div class="completion">
+
+                <div class="completion-top">
+
+                    <span>
+                        Profile Completion
+                    </span>
+
+                    <strong>
+                        {{ completion_percentage }}%
+                    </strong>
+
+                </div>
+
+                <div class="completion-bar">
+
+                    <div
+                        class="completion-fill"
+                        style="width: {{ completion_percentage }}%;">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= PROFILE FORM ================= -->
+
+        <div class="profile-card">
+
+            <h2>
+                ✏️ Edit Your Profile
+            </h2>
+
+
+            <!-- IMPORTANT: enctype required for photo upload -->
+
+            <form
+                method="POST"
+                enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+
+                <div class="form-grid">
+
+
+                    <!-- PROFILE PHOTO -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Profile Photo
+                        </label>
+
+                        <input
+                            type="file"
+                            name="profile_image"
+                            class="file-input"
+                            accept="image/*">
+
+                        <div class="file-help">
+                            JPG, JPEG, PNG or WEBP image recommended.
+                        </div>
+
+
+                        {% if profile.profile_image %}
+
+                            <div class="photo-preview">
+
+                                <img
+                                    src="{{ profile.profile_image.url }}"
+                                    class="preview-image"
+                                    alt="Current Profile Photo">
+
+                                <span>
+                                    Current profile photo
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="full_name"
+                            value="{{ profile.full_name }}"
+                            placeholder="Enter your full name">
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            value="{{ profile.phone }}"
+                            placeholder="Enter phone number">
+
+                    </div>
+
+
+                    <!-- LOCATION -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Location
+                        </label>
+
+                        <input
+                            type="text"
+                            name="location"
+                            value="{{ profile.location }}"
+                            placeholder="Example: Solapur, Maharashtra">
+
+                    </div>
+
+
+                    <!-- EDUCATION -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Education
+                        </label>
+
+                        <input
+                            type="text"
+                            name="education"
+                            value="{{ profile.education }}"
+                            placeholder="Example: B.Sc. Computer Science">
+
+                    </div>
+
+
+                    <!-- SKILLS -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Skills
+                        </label>
+
+                        <textarea
+                            name="skills"
+                            placeholder="Example: Python, Django, HTML, CSS, JavaScript, SQL">{{ profile.skills }}</textarea>
+
+                    </div>
+
+
+                    <!-- BIO -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            About Me
+                        </label>
+
+                        <textarea
+                            name="bio"
+                            placeholder="Tell recruiters about yourself...">{{ profile.bio }}</textarea>
+
+                    </div>
+
+
+                    <!-- GITHUB -->
+
+                    <div class="form-group">
+
+                        <label>
+                            GitHub Profile
+                        </label>
+
+                        <input
+                            type="url"
+                            name="github"
+                            value="{{ profile.github }}"
+                            placeholder="https://github.com/username">
+
+                    </div>
+
+
+                    <!-- LINKEDIN -->
+
+                    <div class="form-group">
+
+                        <label>
+                            LinkedIn Profile
+                        </label>
+
+                        <input
+                            type="url"
+                            name="linkedin"
+                            value="{{ profile.linkedin }}"
+                            placeholder="https://linkedin.com/in/username">
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- SAVE -->
+
+                <button
+                    type="submit"
+                    class="save-btn">
+
+                    💾 Save Profile
+
+                </button>
+
+
+            </form>
+
+
+            <div class="profile-info">
+
+                💡 <strong>Tip:</strong>
+                Complete your profile to unlock better job
+                recommendations, resume analysis and AI career guidance.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

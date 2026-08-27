@@ -1,0 +1,1263 @@
+{% extends "base.html" %}
+
+{% block title %}Career Dashboard | CareerHub AI{% endblock %}
+
+{% block content %}
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .dashboard-page {
+        min-height: calc(100vh - 70px);
+        padding: 40px 5%;
+        background: #f5f7fb;
+        color: #1e293b;
+    }
+
+    .dashboard-container {
+        max-width: 1250px;
+        margin: auto;
+    }
+
+    /* ================= HEADER ================= */
+
+    .dashboard-header {
+        margin-bottom: 28px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 34px;
+        color: #111827;
+        margin-bottom: 8px;
+    }
+
+    .dashboard-header p {
+        color: #64748b;
+        font-size: 16px;
+    }
+
+    .user-name {
+        color: #2563eb;
+    }
+
+    /* ================= CAREER SCORE ================= */
+
+    .career-score {
+        background: linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5
+        );
+
+        color: white;
+
+        border-radius: 22px;
+
+        padding: 30px;
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        box-shadow:
+            0 15px 35px rgba(37,99,235,.25);
+
+        margin-bottom: 25px;
+    }
+
+    .score-info h2 {
+        font-size: 25px;
+        margin-bottom: 8px;
+    }
+
+    .score-info p {
+        color: #dbeafe;
+        line-height: 1.6;
+        max-width: 700px;
+    }
+
+    .score-circle {
+        width: 125px;
+        height: 125px;
+
+        min-width: 125px;
+
+        border-radius: 50%;
+
+        background: white;
+
+        color: #2563eb;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-weight: bold;
+
+        box-shadow:
+            0 10px 25px rgba(0,0,0,.15);
+    }
+
+    .score-circle strong {
+        font-size: 38px;
+    }
+
+    .score-circle span {
+        font-size: 13px;
+        color: #64748b;
+    }
+
+    /* ================= STATS ================= */
+
+    .stats-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 18px;
+
+        margin-bottom: 25px;
+    }
+
+    .stat-card {
+        background: white;
+
+        border-radius: 16px;
+
+        padding: 22px;
+
+        border: 1px solid #e2e8f0;
+
+        transition: .25s;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+
+        box-shadow:
+            0 12px 25px rgba(0,0,0,.08);
+    }
+
+    .stat-icon {
+        width: 45px;
+        height: 45px;
+
+        border-radius: 12px;
+
+        background: #eff6ff;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 22px;
+
+        margin-bottom: 15px;
+    }
+
+    .stat-card h3 {
+        font-size: 28px;
+        color: #111827;
+        margin-bottom: 5px;
+    }
+
+    .stat-card p {
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    /* ================= MAIN GRID ================= */
+
+    .dashboard-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            1.4fr 1fr;
+
+        gap: 25px;
+    }
+
+    .dashboard-card {
+
+        background: white;
+
+        border-radius: 18px;
+
+        padding: 25px;
+
+        border: 1px solid #e2e8f0;
+
+        margin-bottom: 25px;
+
+        box-shadow:
+            0 5px 20px rgba(0,0,0,.03);
+    }
+
+    .dashboard-card h2 {
+
+        font-size: 20px;
+
+        color: #111827;
+
+        margin-bottom: 20px;
+    }
+
+    /* ================= PROGRESS ================= */
+
+    .progress-item {
+        margin-bottom: 20px;
+    }
+
+    .progress-top {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        margin-bottom: 8px;
+
+        font-size: 14px;
+
+        color: #475569;
+    }
+
+    .progress-bar {
+
+        width: 100%;
+
+        height: 9px;
+
+        background: #e2e8f0;
+
+        border-radius: 20px;
+
+        overflow: hidden;
+    }
+
+    .progress-fill {
+
+        height: 100%;
+
+        background: linear-gradient(
+            90deg,
+            #2563eb,
+            #6366f1
+        );
+
+        border-radius: 20px;
+    }
+
+    /* ================= ACTIONS ================= */
+
+    .action-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 12px;
+    }
+
+    .action-btn {
+
+        text-decoration: none;
+
+        padding: 16px;
+
+        border-radius: 12px;
+
+        background: #f8fafc;
+
+        border: 1px solid #e2e8f0;
+
+        color: #1e293b;
+
+        font-weight: bold;
+
+        transition: .2s;
+
+        display: block;
+    }
+
+    .action-btn:hover {
+
+        background: #eff6ff;
+
+        border-color: #93c5fd;
+
+        color: #2563eb;
+
+        transform: translateY(-2px);
+    }
+
+    .action-btn span {
+
+        display: block;
+
+        font-size: 23px;
+
+        margin-bottom: 8px;
+    }
+
+    /* ================= APPLICATION ================= */
+
+    .application-item {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 15px;
+
+        padding: 15px;
+
+        margin-bottom: 10px;
+
+        background: #f8fafc;
+
+        border: 1px solid #e2e8f0;
+
+        border-radius: 12px;
+    }
+
+    .application-info strong {
+
+        display: block;
+
+        color: #111827;
+
+        margin-bottom: 5px;
+    }
+
+    .application-info span {
+
+        color: #64748b;
+
+        font-size: 13px;
+    }
+
+    .application-status {
+
+        padding: 6px 10px;
+
+        border-radius: 20px;
+
+        background: #dcfce7;
+
+        color: #15803d;
+
+        font-size: 12px;
+
+        font-weight: bold;
+
+        white-space: nowrap;
+    }
+
+    .empty-box {
+
+        padding: 25px;
+
+        text-align: center;
+
+        color: #64748b;
+
+        background: #f8fafc;
+
+        border-radius: 12px;
+
+        border: 1px dashed #cbd5e1;
+    }
+
+    /* ================= AI HISTORY ================= */
+
+    .chat-item {
+
+        display: block;
+
+        text-decoration: none;
+
+        padding: 14px;
+
+        margin-bottom: 10px;
+
+        background: #f8fafc;
+
+        border: 1px solid #e2e8f0;
+
+        border-radius: 12px;
+
+        transition: .2s;
+    }
+
+    .chat-item:hover {
+
+        background: #eff6ff;
+
+        border-color: #93c5fd;
+    }
+
+    .chat-question {
+
+        color: #1e293b;
+
+        font-weight: bold;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+    }
+
+    .chat-date {
+
+        margin-top: 5px;
+
+        color: #94a3b8;
+
+        font-size: 12px;
+    }
+
+    /* ================= RECOMMENDATION ================= */
+
+    .recommendation {
+
+        padding: 17px;
+
+        background: #f8fafc;
+
+        border-radius: 12px;
+
+        margin-bottom: 12px;
+
+        border-left: 4px solid #2563eb;
+    }
+
+    .recommendation strong {
+
+        color: #111827;
+    }
+
+    .recommendation p {
+
+        margin-top: 5px;
+
+        color: #64748b;
+
+        font-size: 14px;
+
+        line-height: 1.5;
+    }
+
+    /* ================= PROFILE ================= */
+
+    .profile-info {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 15px;
+
+        margin-bottom: 20px;
+    }
+
+    .profile-avatar {
+
+        width: 58px;
+
+        height: 58px;
+
+        border-radius: 50%;
+
+        background: linear-gradient(
+            135deg,
+            #2563eb,
+            #6366f1
+        );
+
+        color: white;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 23px;
+
+        font-weight: bold;
+    }
+
+    .profile-info h3 {
+
+        color: #111827;
+
+        margin-bottom: 4px;
+    }
+
+    .profile-info p {
+
+        color: #64748b;
+
+        font-size: 14px;
+    }
+
+    /* ================= DARK MODE ================= */
+
+    body.dark .dashboard-page {
+        background: #0f172a;
+        color: #e5e7eb;
+    }
+
+    body.dark .dashboard-header h1 {
+        color: #f8fafc;
+    }
+
+    body.dark .dashboard-header p {
+        color: #94a3b8;
+    }
+
+    body.dark .stat-card,
+    body.dark .dashboard-card {
+
+        background: #111827;
+
+        border-color: #1e293b;
+    }
+
+    body.dark .stat-card h3,
+    body.dark .dashboard-card h2 {
+
+        color: #f8fafc;
+    }
+
+    body.dark .stat-card p {
+
+        color: #94a3b8;
+    }
+
+    body.dark .stat-icon {
+
+        background: #172554;
+    }
+
+    body.dark .progress-top {
+
+        color: #cbd5e1;
+    }
+
+    body.dark .progress-bar {
+
+        background: #334155;
+    }
+
+    body.dark .action-btn {
+
+        background: #172033;
+
+        border-color: #334155;
+
+        color: #e5e7eb;
+    }
+
+    body.dark .action-btn:hover {
+
+        background: #1e3a8a;
+
+        border-color: #3b82f6;
+
+        color: white;
+    }
+
+    body.dark .application-item,
+    body.dark .chat-item,
+    body.dark .empty-box,
+    body.dark .recommendation {
+
+        background: #172033;
+
+        border-color: #334155;
+    }
+
+    body.dark .application-info strong,
+    body.dark .chat-question,
+    body.dark .recommendation strong,
+    body.dark .profile-info h3 {
+
+        color: #f8fafc;
+    }
+
+    body.dark .application-info span,
+    body.dark .chat-date,
+    body.dark .recommendation p,
+    body.dark .profile-info p {
+
+        color: #94a3b8;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media(max-width: 900px) {
+
+        .stats-grid {
+
+            grid-template-columns:
+                repeat(2, 1fr);
+        }
+
+        .dashboard-grid {
+
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media(max-width: 600px) {
+
+        .dashboard-page {
+
+            padding: 25px 15px;
+        }
+
+        .career-score {
+
+            flex-direction: column;
+
+            text-align: center;
+
+            gap: 25px;
+        }
+
+        .stats-grid {
+
+            grid-template-columns: 1fr;
+        }
+
+        .action-grid {
+
+            grid-template-columns: 1fr;
+        }
+
+        .dashboard-header h1 {
+
+            font-size: 27px;
+        }
+
+        .application-item {
+
+            align-items: flex-start;
+
+            flex-direction: column;
+        }
+    }
+
+</style>
+
+
+<div class="dashboard-page">
+
+<div class="dashboard-container">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="dashboard-header">
+
+        <h1>
+
+            👋 Welcome,
+
+            <span class="user-name">
+                {{ user.username }}
+            </span>
+
+        </h1>
+
+        <p>
+
+            Track your career progress and discover
+            your next opportunity.
+
+        </p>
+
+    </div>
+
+
+    <!-- ================= CAREER SCORE ================= -->
+
+    <div class="career-score">
+
+        <div class="score-info">
+
+            <h2>
+                🚀 Career Readiness
+            </h2>
+
+            <p>
+
+                Your CareerHub AI dashboard is ready.
+                Keep improving your skills, resume and
+                interview preparation.
+
+            </p>
+
+        </div>
+
+
+        <div class="score-circle">
+
+            <strong>74</strong>
+
+            <span>/ 100</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <div class="stats-grid">
+
+
+        <!-- APPLICATIONS -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                💼
+            </div>
+
+            <h3>
+                {{ applications_count }}
+            </h3>
+
+            <p>
+                Jobs Applied
+            </p>
+
+        </div>
+
+
+        <!-- AI CHATS -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🤖
+            </div>
+
+            <h3>
+                {{ ai_chats_count }}
+            </h3>
+
+            <p>
+                AI Chats
+            </p>
+
+        </div>
+
+
+        <!-- RESUME -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📄
+            </div>
+
+            <h3>
+                82%
+            </h3>
+
+            <p>
+                Resume Score
+            </p>
+
+        </div>
+
+
+        <!-- INTERVIEW -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🎤
+            </div>
+
+            <h3>
+                76%
+            </h3>
+
+            <p>
+                Interview Score
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= MAIN GRID ================= -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- ================= LEFT ================= -->
+
+        <div>
+
+
+            <!-- ================= SKILLS ================= -->
+
+            <div class="dashboard-card">
+
+                <h2>
+                    🧠 Skills Progress
+                </h2>
+
+
+                <div class="progress-item">
+
+                    <div class="progress-top">
+
+                        <span>Python</span>
+
+                        <strong>85%</strong>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="width:85%">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress-item">
+
+                    <div class="progress-top">
+
+                        <span>Django</span>
+
+                        <strong>72%</strong>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="width:72%">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress-item">
+
+                    <div class="progress-top">
+
+                        <span>HTML / CSS</span>
+
+                        <strong>90%</strong>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="width:90%">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress-item">
+
+                    <div class="progress-top">
+
+                        <span>JavaScript</span>
+
+                        <strong>65%</strong>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="width:65%">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress-item">
+
+                    <div class="progress-top">
+
+                        <span>SQL</span>
+
+                        <strong>60%</strong>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="width:60%">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= RECENT APPLICATIONS ================= -->
+
+            <div class="dashboard-card">
+
+                <h2>
+                    💼 Recent Applications
+                </h2>
+
+
+                {% for application in applications|slice:":5" %}
+
+                    <div class="application-item">
+
+                        <div class="application-info">
+
+                            <strong>
+
+                                {{ application }}
+
+                            </strong>
+
+                            <span>
+
+                                Applied:
+                                {{ application.applied_at|date:"d M Y" }}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="application-status">
+
+                            Applied
+
+                        </div>
+
+                    </div>
+
+                {% empty %}
+
+                    <div class="empty-box">
+
+                        💼 No applications yet.
+
+                        <br><br>
+
+                        Start applying for jobs to see
+                        them here.
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- ================= AI RECOMMENDATIONS ================= -->
+
+            <div class="dashboard-card">
+
+                <h2>
+                    🤖 AI Recommendations
+                </h2>
+
+
+                <div class="recommendation">
+
+                    <strong>
+                        📄 Improve your Resume
+                    </strong>
+
+                    <p>
+
+                        Add project details and measurable
+                        achievements to improve your ATS score.
+
+                    </p>
+
+                </div>
+
+
+                <div class="recommendation">
+
+                    <strong>
+                        🧠 Improve JavaScript
+                    </strong>
+
+                    <p>
+
+                        Practice DOM manipulation, APIs
+                        and modern JavaScript.
+
+                    </p>
+
+                </div>
+
+
+                <div class="recommendation">
+
+                    <strong>
+                        🎤 Practice Interviews
+                    </strong>
+
+                    <p>
+
+                        Use CareerHub AI to practice
+                        technical interview questions.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= RIGHT ================= -->
+
+        <div>
+
+
+            <!-- ================= PROFILE ================= -->
+
+            <div class="dashboard-card">
+
+                <h2>
+                    👤 My Profile
+                </h2>
+
+
+                <div class="profile-info">
+
+                    <div class="profile-avatar">
+
+                        {{ user.username|first|upper }}
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            {{ user.username }}
+                        </h3>
+
+                        <p>
+                            {{ user.email }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress-item">
+
+                    <div class="progress-top">
+
+                        <span>
+                            Profile Completion
+                        </span>
+
+                        <strong>
+                            85%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="width:85%">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= QUICK ACTIONS ================= -->
+
+            <div class="dashboard-card">
+
+                <h2>
+                    ⚡ Quick Actions
+                </h2>
+
+
+                <div class="action-grid">
+
+
+                    <a
+                        href="/ai/"
+                        class="action-btn">
+
+                        <span>
+                            🤖
+                        </span>
+
+                        Ask Career AI
+
+                    </a>
+
+
+                    <a
+                        href="/companies/"
+                        class="action-btn">
+
+                        <span>
+                            🏢
+                        </span>
+
+                        Explore Companies
+
+                    </a>
+
+
+                    <a
+                        href="/my-applications/"
+                        class="action-btn">
+
+                        <span>
+                            📋
+                        </span>
+
+                        My Applications
+
+                    </a>
+
+
+                    <a
+                        href="/"
+                        class="action-btn">
+
+                        <span>
+                            🧭
+                        </span>
+
+                        Career Roadmap
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= RECENT AI CHATS ================= -->
+
+            <div class="dashboard-card">
+
+                <h2>
+                    🤖 Recent AI Chats
+                </h2>
+
+
+                {% for chat in chat_history|slice:":5" %}
+
+                    <a
+                        href="/ai/?chat={{ chat.id }}"
+                        class="chat-item">
+
+                        <div class="chat-question">
+
+                            💬 {{ chat.question }}
+
+                        </div>
+
+
+                        <div class="chat-date">
+
+                            {{ chat.created_at|date:"d M Y, h:i A" }}
+
+                        </div>
+
+                    </a>
+
+                {% empty %}
+
+                    <div class="empty-box">
+
+                        🤖 No AI chats yet.
+
+                        <br><br>
+
+                        Ask CareerHub AI your first
+                        career question.
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+{% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.utils import timezone
@@ -12,7 +12,7 @@ from reportlab.platypus import (
     Paragraph,
     Spacer,
     Table,
-    TableStyle
+    TableStyle,
 )
 from reportlab.lib.units import mm
 
@@ -28,9 +28,8 @@ def job_list(request):
     query = request.GET.get("q", "").strip()
     company = request.GET.get("company", "").strip()
 
-    jobs = Job.objects.all()
+    jobs = Job.objects.all().order_by("-created_at")
 
-    # SEARCH
     if query:
         jobs = jobs.filter(
             title__icontains=query
@@ -40,7 +39,6 @@ def job_list(request):
             skills__icontains=query
         )
 
-    # COMPANY FILTER
     if company:
         jobs = jobs.filter(
             company__iexact=company
@@ -71,11 +69,11 @@ def apply_job(request, job_id):
         application = JobApplication.objects.create(
             job=job,
             user=request.user,
-            full_name=request.POST.get("full_name"),
-            email=request.POST.get("email"),
-            phone=request.POST.get("phone"),
+            full_name=request.POST.get("full_name", "").strip(),
+            email=request.POST.get("email", "").strip(),
+            phone=request.POST.get("phone", "").strip(),
             resume=request.FILES.get("resume"),
-            cover_letter=request.POST.get("cover_letter")
+            cover_letter=request.POST.get("cover_letter", "").strip(),
         )
 
         return render(
@@ -83,7 +81,7 @@ def apply_job(request, job_id):
             "jobs/application_success.html",
             {
                 "job": job,
-                "application": application
+                "application": application,
             }
         )
 
@@ -91,7 +89,7 @@ def apply_job(request, job_id):
         request,
         "jobs/apply.html",
         {
-            "job": job
+            "job": job,
         }
     )
 
@@ -106,7 +104,7 @@ def download_application_pdf(request, application_id):
     application = get_object_or_404(
         JobApplication,
         id=application_id,
-        user=request.user
+        user=request.user,
     )
 
     response = HttpResponse(
@@ -123,7 +121,7 @@ def download_application_pdf(request, application_id):
         rightMargin=20 * mm,
         leftMargin=20 * mm,
         topMargin=18 * mm,
-        bottomMargin=18 * mm
+        bottomMargin=18 * mm,
     )
 
     styles = getSampleStyleSheet()
@@ -135,7 +133,7 @@ def download_application_pdf(request, application_id):
         leading=30,
         alignment=TA_CENTER,
         textColor=colors.HexColor("#2563eb"),
-        spaceAfter=8
+        spaceAfter=8,
     )
 
     subtitle_style = ParagraphStyle(
@@ -145,7 +143,7 @@ def download_application_pdf(request, application_id):
         leading=14,
         alignment=TA_CENTER,
         textColor=colors.HexColor("#64748b"),
-        spaceAfter=15
+        spaceAfter=15,
     )
 
     heading_style = ParagraphStyle(
@@ -154,7 +152,7 @@ def download_application_pdf(request, application_id):
         fontSize=14,
         textColor=colors.HexColor("#111827"),
         spaceBefore=12,
-        spaceAfter=8
+        spaceAfter=8,
     )
 
     normal_style = ParagraphStyle(
@@ -162,7 +160,7 @@ def download_application_pdf(request, application_id):
         parent=styles["Normal"],
         fontSize=10,
         leading=15,
-        textColor=colors.HexColor("#374151")
+        textColor=colors.HexColor("#374151"),
     )
 
     story = []
@@ -170,25 +168,35 @@ def download_application_pdf(request, application_id):
     story.append(
         Paragraph(
             "CareerHub AI",
-            title_style
+            title_style,
         )
     )
 
     story.append(
         Paragraph(
             "JOB APPLICATION CONFIRMATION",
-            subtitle_style
+            subtitle_style,
         )
     )
+
+    # -----------------------------------------------------
+    # STATUS
+    # -----------------------------------------------------
 
     status_table = Table(
         [
             [
-                Paragraph("<b>APPLICATION STATUS</b>", normal_style),
-                Paragraph("<b>SUBMITTED</b>", normal_style)
+                Paragraph(
+                    "<b>APPLICATION STATUS</b>",
+                    normal_style,
+                ),
+                Paragraph(
+                    f"<b>{application.status.upper()}</b>",
+                    normal_style,
+                ),
             ]
         ],
-        colWidths=[75 * mm, 75 * mm]
+        colWidths=[75 * mm, 75 * mm],
     )
 
     status_table.setStyle(
@@ -197,52 +205,52 @@ def download_application_pdf(request, application_id):
                 "BACKGROUND",
                 (0, 0),
                 (-1, -1),
-                colors.HexColor("#eff6ff")
+                colors.HexColor("#eff6ff"),
             ),
             (
                 "TEXTCOLOR",
                 (1, 0),
                 (1, 0),
-                colors.HexColor("#2563eb")
+                colors.HexColor("#2563eb"),
             ),
             (
                 "BOX",
                 (0, 0),
                 (-1, -1),
                 0.8,
-                colors.HexColor("#bfdbfe")
+                colors.HexColor("#bfdbfe"),
             ),
             (
                 "INNERGRID",
                 (0, 0),
                 (-1, -1),
                 0.5,
-                colors.HexColor("#dbeafe")
+                colors.HexColor("#dbeafe"),
             ),
             (
                 "LEFTPADDING",
                 (0, 0),
                 (-1, -1),
-                10
+                10,
             ),
             (
                 "RIGHTPADDING",
                 (0, 0),
                 (-1, -1),
-                10
+                10,
             ),
             (
                 "TOPPADDING",
                 (0, 0),
                 (-1, -1),
-                10
+                10,
             ),
             (
                 "BOTTOMPADDING",
                 (0, 0),
                 (-1, -1),
-                10
-            )
+                10,
+            ),
         ])
     )
 
@@ -250,10 +258,14 @@ def download_application_pdf(request, application_id):
 
     story.append(Spacer(1, 12))
 
+    # -----------------------------------------------------
+    # APPLICATION DETAILS
+    # -----------------------------------------------------
+
     story.append(
         Paragraph(
             "Application Details",
-            heading_style
+            heading_style,
         )
     )
 
@@ -268,49 +280,49 @@ def download_application_pdf(request, application_id):
             Paragraph("<b>Application ID</b>", normal_style),
             Paragraph(
                 f"CHAI-{application.id:05d}",
-                normal_style
-            )
+                normal_style,
+            ),
         ],
         [
             Paragraph("<b>Applied Date</b>", normal_style),
             Paragraph(
                 applied_date,
-                normal_style
-            )
+                normal_style,
+            ),
         ],
         [
             Paragraph("<b>Job Title</b>", normal_style),
             Paragraph(
                 application.job.title,
-                normal_style
-            )
+                normal_style,
+            ),
         ],
         [
             Paragraph("<b>Company</b>", normal_style),
             Paragraph(
                 application.job.company,
-                normal_style
-            )
+                normal_style,
+            ),
         ],
         [
             Paragraph("<b>Location</b>", normal_style),
             Paragraph(
                 application.job.location,
-                normal_style
-            )
+                normal_style,
+            ),
         ],
         [
             Paragraph("<b>Job Type</b>", normal_style),
             Paragraph(
                 application.job.job_type,
-                normal_style
-            )
-        ]
+                normal_style,
+            ),
+        ],
     ]
 
     application_table = Table(
         application_data,
-        colWidths=[50 * mm, 100 * mm]
+        colWidths=[50 * mm, 100 * mm],
     )
 
     application_table.setStyle(
@@ -319,58 +331,71 @@ def download_application_pdf(request, application_id):
                 "BACKGROUND",
                 (0, 0),
                 (0, -1),
-                colors.HexColor("#f8fafc")
+                colors.HexColor("#f8fafc"),
             ),
             (
                 "BOX",
                 (0, 0),
                 (-1, -1),
                 0.8,
-                colors.HexColor("#e2e8f0")
+                colors.HexColor("#e2e8f0"),
             ),
             (
                 "INNERGRID",
                 (0, 0),
                 (-1, -1),
                 0.5,
-                colors.HexColor("#e2e8f0")
+                colors.HexColor("#e2e8f0"),
             ),
             (
                 "VALIGN",
                 (0, 0),
                 (-1, -1),
-                "TOP"
-            )
+                "TOP",
+            ),
         ])
     )
 
     story.append(application_table)
 
+    # -----------------------------------------------------
+    # APPLICANT DETAILS
+    # -----------------------------------------------------
+
     story.append(
         Paragraph(
             "Applicant Details",
-            heading_style
+            heading_style,
         )
     )
 
     applicant_data = [
         [
             Paragraph("<b>Full Name</b>", normal_style),
-            Paragraph(application.full_name or "", normal_style)
+            Paragraph(
+                application.full_name or "",
+                normal_style,
+            ),
         ],
         [
             Paragraph("<b>Email</b>", normal_style),
-            Paragraph(application.email or "", normal_style)
+            Paragraph(
+                application.email or "",
+                normal_style,
+            ),
         ],
         [
             Paragraph("<b>Phone</b>", normal_style),
-            Paragraph(application.phone or "", normal_style)
-        ]
+            Paragraph(
+                application.phone or "",
+                normal_style,
+            ),
+        ],
     ]
 
     applicant_table = Table(
         applicant_data,
-        colWidths=[50 * mm, 100 * mm]
+        colWidths=[50 * mm, 100 * mm],
     )
 
     applicant_table.setStyle(
@@ -379,59 +404,72 @@ def download_application_pdf(request, application_id):
                 "BACKGROUND",
                 (0, 0),
                 (0, -1),
-                colors.HexColor("#f8fafc")
+                colors.HexColor("#f8fafc"),
             ),
             (
                 "BOX",
                 (0, 0),
                 (-1, -1),
                 0.8,
-                colors.HexColor("#e2e8f0")
+                colors.HexColor("#e2e8f0"),
             ),
             (
                 "INNERGRID",
                 (0, 0),
                 (-1, -1),
                 0.5,
-                colors.HexColor("#e2e8f0")
-            )
+                colors.HexColor("#e2e8f0"),
+            ),
         ])
     )
 
     story.append(applicant_table)
+
+    # -----------------------------------------------------
+    # COVER LETTER
+    # -----------------------------------------------------
 
     if application.cover_letter:
 
         story.append(
             Paragraph(
                 "Cover Letter",
-                heading_style
+                heading_style,
             )
+        )
+
+        cover_letter = (
+            application.cover_letter
+            .replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+            .replace("\n", "<br/>")
         )
 
         story.append(
             Paragraph(
-                application.cover_letter.replace(
-                    "\n",
-                    "<br/>"
-                ),
-                normal_style
+                cover_letter,
+                normal_style,
             )
         )
+
+    # -----------------------------------------------------
+    # FOOTER
+    # -----------------------------------------------------
 
     story.append(Spacer(1, 25))
 
     story.append(
         Paragraph(
             "Thank you for applying through CareerHub AI.",
-            subtitle_style
+            subtitle_style,
         )
     )
 
     story.append(
         Paragraph(
             "Please keep this document for your records.",
-            subtitle_style
+            subtitle_style,
         )
     )
 
@@ -454,16 +492,24 @@ def my_applications(request):
         .order_by("-applied_at")
     )
 
+    total = applications.count()
+    submitted = applications.filter(status="Submitted").count()
+    under_review = applications.filter(status="Under Review").count()
+    shortlisted = applications.filter(status="Shortlisted").count()
+    rejected = applications.filter(status="Rejected").count()
+
     return render(
         request,
         "jobs/my_applications.html",
         {
             "applications": applications,
-            "total_applications": applications.count()
+            "total": total,
+            "submitted": submitted,
+            "under_review": under_review,
+            "shortlisted": shortlisted,
+            "rejected": rejected,
         }
     )
-
-
 # =========================================================
 # CONTACT
 # =========================================================
@@ -473,17 +519,17 @@ def contact(request):
     if request.method == "POST":
 
         ContactMessage.objects.create(
-            name=request.POST.get("name"),
-            email=request.POST.get("email"),
-            message=request.POST.get("message")
+            name=request.POST.get("name", "").strip(),
+            email=request.POST.get("email", "").strip(),
+            message=request.POST.get("message", "").strip(),
         )
 
         return render(
             request,
-            "contact_success.html"
+            "contact_success.html",
         )
 
     return render(
         request,
-        "contact.html"
+        "contact.html",
     )
