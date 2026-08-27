@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from .models import ChatHistory, Application, Profile
 
 import requests
+import os
 from openai import OpenAI
 
 # =========================================================
