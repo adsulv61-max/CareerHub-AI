@@ -21,7 +21,14 @@ SECRET_KEY = "django-insecure-7#op)!0x_t6e9n@nh**l1p%6h29r)%^k6_w5!(^s3^g1t5dm*-
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "careerhub-ai-2.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
+CSRF_TRUSTED_ORIGINS = [
+    "https://careerhub-ai-2.onrender.com",
+]
 
 
 # =========================================================
