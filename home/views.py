@@ -394,14 +394,12 @@ def profile(request):
 def ai_chat(request):
 
     answer = ""
-
     selected_chat = None
+    history = []
 
     # =====================================================
     # CHAT HISTORY
     # =====================================================
-
-    history = []
 
     if request.user.is_authenticated:
 
@@ -447,90 +445,55 @@ def ai_chat(request):
 
             try:
 
-                response = requests.post(
+                # =================================================
+                # OPENAI CLIENT
+                # =================================================
 
-                    "http://localhost:11434/api/chat",
-
-                    json={
-
-                        "model": "llama3.2:1b",
-
-                        "messages": [
-
-                            {
-                                "role": "system",
-
-                                "content": (
-                                    "You are CareerHub AI, "
-                                    "a helpful career assistant. "
-                                    "Help students with jobs, "
-                                    "resumes, interviews, "
-                                    "skills, careers and "
-                                    "programming. "
-                                    "Give clear and useful answers."
-                                )
-                            },
-
-                            {
-                                "role": "user",
-
-                                "content": user_message
-                            }
-
-                        ],
-
-                        "stream": False
-
-                    },
-
-                    timeout=120
+                client = OpenAI(
+                    api_key=os.environ.get("OPENAI_API_KEY")
                 )
 
-                data = response.json()
+                response = client.responses.create(
+
+                    model="gpt-4o-mini",
+
+                    instructions=(
+                        "You are CareerHub AI, "
+                        "a helpful career assistant. "
+                        "Help students with jobs, resumes, "
+                        "interviews, skills, careers and programming. "
+                        "Give clear, useful and easy-to-understand answers."
+                    ),
+
+                    input=user_message
+                )
 
                 # =================================================
-                # AI SUCCESS
+                # AI ANSWER
                 # =================================================
 
-                if response.status_code == 200:
+                answer = response.output_text
 
-                    answer = data["message"]["content"]
+                # =================================================
+                # SAVE CHAT
+                # =================================================
 
-                    # =================================================
-                    # SAVE CHAT
-                    # =================================================
+                if request.user.is_authenticated:
 
-                    if request.user.is_authenticated:
+                    new_chat = ChatHistory.objects.create(
 
-                        new_chat = ChatHistory.objects.create(
+                        user=request.user,
 
-                            user=request.user,
+                        question=user_message,
 
-                            question=user_message,
-
-                            answer=answer
-
-                        )
-
-                        selected_chat = new_chat
-
-                        history = ChatHistory.objects.filter(
-                            user=request.user
-                        ).order_by("-created_at")
-
-                else:
-
-                    answer = (
-                        "AI Error: "
-                        + str(data)
+                        answer=answer
                     )
 
-            except requests.exceptions.ConnectionError:
+                    selected_chat = new_chat
 
-                answer = (
-                    "Ollama is not running. "
-                    "Please start Ollama and try again."
-                )
+                    history = ChatHistory.objects.filter(
+                        user=request.user
+                    ).order_by("-created_at")
 
             except Exception as e:
 
@@ -555,9 +518,7 @@ def ai_chat(request):
 
         {
             "answer": answer,
-
             "history": history,
-
             "selected_chat": selected_chat
         }
 
